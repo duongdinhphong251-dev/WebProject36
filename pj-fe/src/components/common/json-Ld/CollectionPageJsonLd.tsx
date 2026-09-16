@@ -30,7 +30,7 @@ interface Props {
 }
 
 export function CollectionPageJsonLd({ locale, path, title, description, items }: Props) {
-  const baseUrl = Env.NEXT_PUBLIC_APP_URL || 'https://glowexplore.com';
+  const baseUrl = Env.NEXT_PUBLIC_APP_URL || 'https://Nhom36.com';
   const schema = buildCollectionPageJsonLd({
     baseUrl,
     locale,

@@ -35,7 +35,7 @@ type PaginatedApiEnvelope<T> = {
 
 // ─── Locations ───────────────────────────────────────────────────────────────
 
-const CITIES_CACHE_KEY = 'glowexplore_cities_cache';
+const CITIES_CACHE_KEY = 'Nhom36_cities_cache';
 const CITIES_CACHE_TTL = 24 * 60 * 60 * 1000; // 24 hours
 
 export async function getCities(): Promise<CityResponseDto[]> {

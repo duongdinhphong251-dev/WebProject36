@@ -99,7 +99,7 @@ export function DealSidebarCTA({
         <Info className="mt-[2px] size-3.5 shrink-0" />
         <span>
           {t("no_payment_notice") ||
-            "GlowExplore không thu tiền — bạn đặt và thanh toán trực tiếp với spa."}
+            "Nhom36 không thu tiền — bạn đặt và thanh toán trực tiếp với spa."}
         </span>
       </div>
 

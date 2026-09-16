@@ -48,7 +48,7 @@ async function enrichSeoMetaFallback(
   const categoryName = t(`home.services.${serviceKey}`);
   const homeLabel = tMain("breadcrumb_home", "Home");
 
-  const isGenericTitle = !seoMeta.title || seoMeta.title === "Glow Explore - Home" || seoMeta.title === "GlowExplore";
+  const isGenericTitle = !seoMeta.title || seoMeta.title === "Glow Explore - Home" || seoMeta.title === "Nhom36";
 
   const fallbackTitle = `${categoryName} | Glow Explore`;
   const fallbackDesc = locale === 'vi'

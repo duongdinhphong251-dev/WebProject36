@@ -45,7 +45,7 @@ export async function NoServicePage({ locale, citySlug }: NoServicePageProps) {
         <div className="flex items-center justify-center w-16 h-16 rounded-2xl bg-white shadow-[0_2px_12px_rgba(0,0,0,0.08)] mb-1">
           <Image
             src="/assets/images/common/logo_x.png"
-            alt="GlowExplore"
+            alt="Nhom36"
             width={56}
             height={56}
             className="object-contain"

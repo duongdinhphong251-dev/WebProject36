@@ -146,7 +146,7 @@ export function SpaBannerCarousel({
         <div className="absolute left-1/2 top-1/2 flex h-14 w-14 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-2xl bg-white/88 shadow-[0_12px_32px_rgba(20,52,35,0.18)] backdrop-blur-sm sm:h-16 sm:w-16">
           <Image
             src="/assets/images/common/logo_x.png"
-            alt="GlowExplore"
+            alt="Nhom36"
             width={44}
             height={12}
             className="h-auto w-11 sm:w-12"

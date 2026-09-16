@@ -19,7 +19,7 @@ export const Env = createEnv({
     EXTERNAL_API: process.env.EXTERNAL_API,
     SELT_API: process.env.NODE_ENV === 'development'
       ? 'http://localhost:3000'
-      : process.env.NEXT_PUBLIC_APP ?? 'https://glowexplore.com/',
+      : process.env.NEXT_PUBLIC_APP ?? 'https://Nhom36.com/',
     NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL,
     NEXT_PUBLIC_APP_NAME: process.env.NEXT_PUBLIC_APP_NAME,
     NEXT_PUBLIC_API_DOMAIN: process.env.NEXT_PUBLIC_API_DOMAIN,

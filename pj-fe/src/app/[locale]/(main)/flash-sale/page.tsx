@@ -17,7 +17,7 @@ const FLASH_SALE_META: Record<
   { title: string; description: string; keywords: string[] }
 > = {
   vi: {
-    title: "Flash Sale Spa & Massage - Ưu đãi giới hạn mỗi ngày | GlowExplore",
+    title: "Flash Sale Spa & Massage - Ưu đãi giới hạn mỗi ngày | Nhom36",
     description:
       "Khám phá deal flash sale spa và massage giá sốc hôm nay. Đặt lịch ngay để nhận ưu đãi giảm giá lên đến 50% tại các spa uy tín gần bạn.",
     keywords: [
@@ -28,7 +28,7 @@ const FLASH_SALE_META: Record<
     ],
   },
   en: {
-    title: "Flash Sale Spa & Massage - Limited Daily Deals | GlowExplore",
+    title: "Flash Sale Spa & Massage - Limited Daily Deals | Nhom36",
     description:
       "Discover today's flash sale spa and massage deals. Book now to get up to 50% off at top-rated spas near you.",
     keywords: [
@@ -39,7 +39,7 @@ const FLASH_SALE_META: Record<
     ],
   },
   ko: {
-    title: "플래시 세일 스파 & 마사지 - 오늘의 한정 특가 | GlowExplore",
+    title: "플래시 세일 스파 & 마사지 - 오늘의 한정 특가 | Nhom36",
     description:
       "오늘의 스파 및 마사지 플래시 세일 딜을 확인하세요. 지금 예약하면 근처 인기 스파에서 최대 50% 할인 혜택을 받을 수 있습니다.",
     keywords: [

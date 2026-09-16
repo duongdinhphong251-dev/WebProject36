@@ -9,10 +9,10 @@ type Props = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
-  const title = locale === "vi" ? "Spa đã lưu | GlowExplore" : "Saved Spas | GlowExplore";
+  const title = locale === "vi" ? "Spa đã lưu | Nhom36" : "Saved Spas | Nhom36";
   const description = locale === "vi"
-    ? "Danh sách các spa yêu thích đã lưu của bạn tại GlowExplore."
-    : "Your list of saved favorite spas on GlowExplore.";
+    ? "Danh sách các spa yêu thích đã lưu của bạn tại Nhom36."
+    : "Your list of saved favorite spas on Nhom36.";
 
   return buildPageMetadataCommon({
     locale,

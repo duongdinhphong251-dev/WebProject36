@@ -17,7 +17,7 @@ interface SpaLogoThumbProps {
 }
 
 /**
- * Client component — dùng useState để fallback về logo GlowExplore khi ảnh lỗi.
+ * Client component — dùng useState để fallback về logo Nhom36 khi ảnh lỗi.
  * Tách ra vì SpaCard là async RSC, không dùng useState trực tiếp được.
  */
 export function SpaLogoThumb({ logoUrl, photoName, name }: SpaLogoThumbProps) {

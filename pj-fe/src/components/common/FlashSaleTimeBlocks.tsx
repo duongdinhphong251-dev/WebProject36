@@ -2,7 +2,7 @@
 
 import { cn } from "@/libs/utils";
 
-/** Đếm ngược flash sale — HH : MM : SS, Figma GlowExplore node 5:1709 (Error/500 + nền #fecdca). */
+/** Đếm ngược flash sale — HH : MM : SS, Figma Nhom36 node 5:1709 (Error/500 + nền #fecdca). */
 export function calcCountdownHms(
   endMs: number,
   nowMs: number,

@@ -17,9 +17,9 @@ export const ITEMS_PER_PAGE = 100;
 
 // ─── URL builder ───────────────────────────────────────────────────────────────
 // Every locale now gets an explicit prefix in the URL:
-//   vi  → https://glowexplore.com/vi/massage
-//   en  → https://glowexplore.com/en/massage
-//   ko  → https://glowexplore.com/ko/masaji
+//   vi  → https://Nhom36.com/vi/massage
+//   en  → https://Nhom36.com/en/massage
+//   ko  → https://Nhom36.com/ko/masaji
 // This ensures Google sees distinct, canonical URLs per language.
 export const localeUrl = (locale: string, path: string): string =>
   `${base}/${locale}${path === '/' ? '' : path}`;

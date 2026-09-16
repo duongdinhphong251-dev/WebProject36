@@ -209,7 +209,7 @@ export default async function SpaDetailRoute({ params, searchParams }: Props) {
   if (!resolved) notFound();
 
   const { spa, resolvedSlug } = resolved;
-  const baseUrl = Env.NEXT_PUBLIC_APP_URL || "https://glowexplore.com";
+  const baseUrl = Env.NEXT_PUBLIC_APP_URL || "https://Nhom36.com";
 
   const dayLabelsRaw = t("day_labels", { returnObjects: true });
   const dayLabels = Array.isArray(dayLabelsRaw)

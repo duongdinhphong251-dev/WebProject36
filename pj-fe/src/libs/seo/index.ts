@@ -5,7 +5,7 @@ import { Env } from '@/libs/Env';
 import 'server-only';
 
 const BASE = Env.NEXT_PUBLIC_APP_URL.replace(/\/$/, '');
-const APP_NAME = Env.NEXT_PUBLIC_APP_NAME ?? 'GlowExplore';
+const APP_NAME = Env.NEXT_PUBLIC_APP_NAME ?? 'Nhom36';
 
 /** OG image — string URL hoặc rich object với dimensions */
 export type OgImage =
@@ -41,7 +41,7 @@ const normalizeImages = (
 /**
  * Build canonical URL.
  *
- * GlowExplore mounts ALL locales under their prefix:
+ * Nhom36 mounts ALL locales under their prefix:
  *   /vi/... , /en/... , /ko/...
  * There is NO prefix-less fallback (no redirect /vi/ → /).
  * Therefore canonical always includes the locale segment.
@@ -145,8 +145,8 @@ export function buildPageMetadataCommon({
     },
     twitter: {
       card: 'summary_large_image',
-      site: '@glowexplore',       // Twitter/X account handle
-      creator: '@glowexplore',
+      site: '@Nhom36',       // Twitter/X account handle
+      creator: '@Nhom36',
       title: finalTwitterTitle,
       description: twitterDescription ?? description,
       images: imgs.map((img) => img.url),

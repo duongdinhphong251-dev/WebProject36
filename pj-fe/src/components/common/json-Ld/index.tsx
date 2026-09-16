@@ -3,7 +3,7 @@ import { Env } from '@/libs/Env';
 import Script from 'next/script';
 
 const BASE = (Env.NEXT_PUBLIC_APP_URL || '').replace(/\/+$/, '');
-const APP_NAME = Env.NEXT_PUBLIC_APP_NAME ?? 'GlowExplore';
+const APP_NAME = Env.NEXT_PUBLIC_APP_NAME ?? 'Nhom36';
 
 const withLeadingSlash = (p?: string) => (p && p.startsWith('/') ? p : `/${p ?? ''}`);
 const toBcp47 = (loc?: string) => {

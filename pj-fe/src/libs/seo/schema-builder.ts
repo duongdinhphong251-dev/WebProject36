@@ -25,7 +25,7 @@ function formatInternationalPhone(phone?: string | null, countryCode: string = '
  * Ref: https://developers.google.com/search/docs/appearance/site-names
  */
 export function buildWebSiteJsonLd(): object {
-  const base = (Env.NEXT_PUBLIC_APP_URL || 'https://glowexplore.com').replace(/\/+$/, '');
+  const base = (Env.NEXT_PUBLIC_APP_URL || 'https://Nhom36.com').replace(/\/+$/, '');
   const name = 'Glow Explore';
   return {
     '@context': 'https://schema.org',
@@ -539,7 +539,7 @@ export function buildProductJsonLd({ baseUrl, locale, market = MARKETS.vn, produ
 
   const fallbackDesc = t(
     'schema_product.fallbackDescription',
-    `${product?.name || 'Smartphone'} — ${product?.short_description || 'Available at GlowExplore'}`,
+    `${product?.name || 'Smartphone'} — ${product?.short_description || 'Available at Nhom36'}`,
     { name: product?.name, desc: product?.short_description },
   );
 
@@ -560,7 +560,7 @@ export function buildProductJsonLd({ baseUrl, locale, market = MARKETS.vn, produ
     'itemCondition': 'https://schema.org/NewCondition',
     'seller': {
       '@type': 'Organization',
-      'name': 'GlowExplore',
+      'name': 'Nhom36',
       'url': baseUrl,
       'address': {
         '@type': 'PostalAddress',
@@ -572,8 +572,8 @@ export function buildProductJsonLd({ baseUrl, locale, market = MARKETS.vn, produ
         'availableLanguage': ['English', 'Spanish'],
       },
       'sameAs': [
-        'https://www.facebook.com/GlowExplore',
-        'https://twitter.com/GlowExplore',
+        'https://www.facebook.com/Nhom36',
+        'https://twitter.com/Nhom36',
       ],
     },
   }));
@@ -1039,10 +1039,10 @@ export function buildHomeOrganizationJsonLd({ baseUrl, locale, market = MARKETS.
   const url = `${base}/${locale}`;
   const address = tMain('footer.main_footer.information.address', 'Xuân Thủy, Cầu Giấy, Hà Nội');
   const phone = tMain('footer.main_footer.information.phone', '0123 456 789');
-  const email = tMain('footer.main_footer.information.email', 'Support@glowexplore.com');
+  const email = tMain('footer.main_footer.information.email', 'Support@Nhom36.com');
   const desc = tMain('footer.main_footer.description', '');
 
-  const companyName = 'GlowExplore';
+  const companyName = 'Nhom36';
 
   const brandOrganization = {
     '@context': 'https://schema.org',
@@ -1052,8 +1052,8 @@ export function buildHomeOrganizationJsonLd({ baseUrl, locale, market = MARKETS.
     'url': base,
     'logo': `${base}/common/logo_header.png`,
     'sameAs': [
-      'https://www.facebook.com/GlowExplore',
-      'https://twitter.com/GlowExplore'
+      'https://www.facebook.com/Nhom36',
+      'https://twitter.com/Nhom36'
     ]
   };
 
@@ -1074,8 +1074,8 @@ export function buildHomeOrganizationJsonLd({ baseUrl, locale, market = MARKETS.
       'addressRegion': 'Hanoi',
     },
     'sameAs': [
-      'https://www.facebook.com/GlowExplore',
-      'https://twitter.com/GlowExplore'
+      'https://www.facebook.com/Nhom36',
+      'https://twitter.com/Nhom36'
     ]
   };
 

@@ -124,12 +124,12 @@ export function SpaSidebarCTA({
         </span>
       </button>
 
-      {/* Ghi chú GlowExplore không thu tiền */}
+      {/* Ghi chú Nhom36 không thu tiền */}
       <div className="flex items-start gap-1.5 rounded-xl bg-[#DDE4D9] p-3 text-[11px] leading-relaxed text-[#5B6B58]">
         <Info className="mt-[2px] size-3.5 shrink-0" />
         <span>
           {t("no_payment_notice") ||
-            "GlowExplore không thu tiền — bạn đặt và thanh toán trực tiếp với spa."}
+            "Nhom36 không thu tiền — bạn đặt và thanh toán trực tiếp với spa."}
         </span>
       </div>
 

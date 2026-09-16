@@ -220,7 +220,7 @@ export default async function DealDetailPage({ params }: Props) {
   if (spaDetail?.distanceKm != null) {
     spa.distanceKm = spaDetail.distanceKm;
   }
-  const baseUrl = Env.NEXT_PUBLIC_APP_URL || "https://glowexplore.com";
+  const baseUrl = Env.NEXT_PUBLIC_APP_URL || "https://Nhom36.com";
   const canonicalSlug = deal.canonicalSlug ?? deal.slug ?? String(deal.id);
   const canonicalPath = `/organization_services/${canonicalSlug}`;
   const canonicalUrl = `${baseUrl}/${locale}${canonicalPath}`;

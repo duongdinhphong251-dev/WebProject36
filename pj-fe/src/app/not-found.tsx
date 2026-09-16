@@ -19,7 +19,7 @@ function Index() {
         <div className="mb-8 flex justify-center">
           <Image
             src="/assets/images/common/logo_x.png"
-            alt="GlowExplore Logo"
+            alt="Nhom36 Logo"
             width={140}
             height={50}
             className="h-auto w-auto object-contain"

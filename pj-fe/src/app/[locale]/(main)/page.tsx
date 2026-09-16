@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import type { LocaleTypes } from "@/i18n/settings";
 import HomePage from "@/components/home-page";
-import { SEO_IMAGE } from "@/constants/seo";
 import { getTranslation } from "@/i18n/server-cache";
 import { buildPageMetadataCommon } from "@/libs/seo/index";
 
@@ -28,7 +27,6 @@ export async function generateMetadata({
     path,
     title: t("seo.title"),
     description: t("seo.description"),
-    images: SEO_IMAGE.common,
     keywords: KEYWORDS[locale] ?? KEYWORDS.vi,
   });
 
@@ -49,7 +47,7 @@ const IndexPage = async ({
     getTranslation(locale as LocaleTypes, "home"),
   ]);
 
-  const baseUrl = Env.NEXT_PUBLIC_APP_URL || "https://glowexplore.com";
+  const baseUrl = Env.NEXT_PUBLIC_APP_URL || "https://Nhom36.com";
 
   const jsonLdData = buildHomeOrganizationJsonLd({
     baseUrl,
@@ -64,7 +62,7 @@ const IndexPage = async ({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdData) }}
       />
-      <h1 className="sr-only">{tHome("seo.title", "GlowExplore")}</h1>
+      <h1 className="sr-only">{tHome("seo.title", "Nhom36")}</h1>
       <HomePage locale={locale} />
     </>
   );

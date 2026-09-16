@@ -8,7 +8,7 @@ interface FlashDealCardProps {
   locale?: string;
 }
 
-/** Figma GlowExplore card: Error/500 badge — https://www.figma.com/design/B1AVv2kzIpwP4QawmsQoSb/Tuoi.ai?node-id=426-9796 */
+/** Figma Nhom36 card: Error/500 badge — https://www.figma.com/design/B1AVv2kzIpwP4QawmsQoSb/Tuoi.ai?node-id=426-9796 */
 function formatDiscountLabel(deal: DealCardDto): string | null {
   const pct = deriveDisplayDiscountPercent({
     discountPercent: deal.discountPercent,

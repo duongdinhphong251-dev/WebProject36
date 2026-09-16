@@ -21,7 +21,7 @@ interface BreadcrumbsJsonLdProps {
  */
 export function BreadcrumbsJsonLd({
   items,
-  baseUrl = Env.NEXT_PUBLIC_APP_URL || "https://glowexplore.com",
+  baseUrl = Env.NEXT_PUBLIC_APP_URL || "https://Nhom36.com",
 }: BreadcrumbsJsonLdProps) {
   if (!items || items.length === 0) return null;
 
