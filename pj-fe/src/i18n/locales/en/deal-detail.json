@@ -1,0 +1,118 @@
+{
+  "breadcrumb": {
+    "home": "Home"
+  },
+  "deal": {
+    "views_count": "{{count}} views",
+    "views_label": "views",
+    "share": "Share",
+    "available_time": "Hours",
+    "starts_from": "Starts from",
+    "valid_until": "Until",
+    "ends_at": "Expires",
+    "valid_period": "Valid",
+    "flash_sale_ends": "Flash sale ends in",
+    "flash_sale": "Flash Sale",
+    "active_offer": "Active offer",
+    "savings": "Save",
+    "from_date": "From",
+    "discount_badge": "-{{percent}}%",
+    "original_price": "Original price",
+    "sale_price": "Sale price",
+    "hours": "hr",
+    "minutes": "min",
+    "seconds": "sec",
+    "deal_info": "Deal information",
+    "conditions_apply": "Terms & conditions",
+    "start_date": "Start date",
+    "end_date": "End date",
+    "reservation": "Reservation",
+    "chat_before_2h": "chat 2 hours in advance"
+  },
+  "spa": {
+    "view_detail": "View detail",
+    "distance_km": "~{{distance}}km",
+    "reviews_count": "reviews"
+  },
+  "open_hours": {
+    "title": "Open hours",
+    "not_available": "Not updated",
+    "closed": "Closed",
+    "days": {
+      "monday": "Monday",
+      "tuesday": "Tuesday",
+      "wednesday": "Wednesday",
+      "thursday": "Thursday",
+      "friday": "Friday",
+      "saturday": "Saturday",
+      "sunday": "Sunday"
+    }
+  },
+  "reviews": {
+    "title": "Customer Reviews",
+    "add_review": "Write a review",
+    "view_more": "View more reviews",
+    "rating_count": "({{count}})",
+    "days_ago": "{{count}} days ago",
+    "months_ago": "{{count}} months ago",
+    "just_now": "Just now",
+    "response_from_owner": "Response from owner",
+    "like": "Like",
+    "share": "Share",
+    "total_label": "total",
+    "empty": "No reviews yet",
+    "out_of_5": "out of 5",
+    "count_label": "reviews",
+    "rating_label": {
+      "excellent": "Excellent",
+      "good": "Good",
+      "fair": "Fair",
+      "average": "Average",
+      "poor": "Needs improvement"
+    },
+    "stars": {
+      "5": "5 stars",
+      "4": "4 stars",
+      "3": "3 stars",
+      "2": "2 stars",
+      "1": "1 star"
+    }
+  },
+  "contact": {
+    "report": "Report",
+    "call": "Call",
+    "chat": "Chat to book",
+    "channel_facebook": "Facebook",
+    "channel_zalo": "Zalo",
+    "channel_telegram": "Telegram"
+  },
+  "empty_state": {
+    "sold_out_title": "This deal is all gone",
+    "sold_out_subtitle": "All bookings for this deal are fully claimed. Check out other deals you might like",
+    "expired_title": "This deal has ended",
+    "expired_subtitle": "Don’t worry, there are more deals waiting for you",
+    "not_found_title": "No deals available",
+    "not_found_subtitle": "Try adjusting your filters or search keywords",
+    "you_may_also_like": "You May Also Like",
+    "view_more_deals": "View more deals",
+    "other_deals_at_spa": "Other deals at this spa"
+  },
+  "similar_spas_nearby": "Similar spas nearby",
+  "about": "About",
+  "best_deal_at_spa": "Best deal at this spa",
+  "location": "Location",
+  "get_directions": "Get directions",
+  "schedule_consultation": "Chat to book",
+  "chat_hint": "message includes deal details",
+  "show_phone": "Show phone number",
+  "save_deal": "Save deal",
+  "no_payment_notice": "GlowExplore charges no fees — book and pay directly at the spa.",
+  "deal_at_spa": "Deal at",
+  "view_spa_page": "View spa page",
+  "is_open_now": "Open",
+  "is_closed_today": "Closed today",
+  "is_closed": "Closed",
+  "opens_at": "Opens at {{time}}",
+  "closes_at": "Closes at {{time}}",
+  "closed_for_today": "Closed for today"
+}

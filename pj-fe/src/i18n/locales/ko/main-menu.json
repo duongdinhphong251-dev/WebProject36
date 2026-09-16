@@ -1,0 +1,199 @@
+{
+  "saved_places": "저장된 장소",
+  "top-menu": [
+    {
+      "label": "프로모션",
+      "href": "/promotions"
+    },
+    {
+      "label": "매장 찾기",
+      "href": "/store-locator"
+    }
+  ],
+  "search": {
+    "placeholder": "서비스, 살롱 검색...",
+    "suggestions": "검색 제안",
+    "loading": "로딩 중...",
+    "min_chars": "검색하려면 최소 2자를 입력하세요",
+    "no_results": "검색 결과가 없습니다"
+  },
+  "main-menu": [
+    {
+      "label": "마사지",
+      "href": "/masaji"
+    },
+    {
+      "label": "귀청소",
+      "href": "/gwi-cheongso"
+    },
+    {
+      "label": "헤드스파",
+      "href": "/dupi-keeo-syampu"
+    },
+    {
+      "label": "피부관리",
+      "href": "/seukinkeeo"
+    },
+    {
+      "label": "속눈썹 & 눈썹",
+      "href": "/sognunsseob-mic-nunsseob-yeonjang"
+    },
+    {
+      "label": "네일",
+      "href": "/neil-maeni-pedi"
+    },
+    {
+      "label": "제모",
+      "href": "/wagsing"
+    },
+    {
+      "label": "치과",
+      "href": "/chigwa"
+    },
+    {
+      "label": "헤어스타일링",
+      "href": "/he-eo-babeo"
+    },
+    {
+      "label": "헬스",
+      "href": "/piteuniseu"
+    },
+    {
+      "label": "레스토랑",
+      "href": "/deals"
+    },
+    {
+      "label": "여행",
+      "href": "/deals"
+    },
+    {
+      "label": "골프",
+      "href": "/deals"
+    },
+    {
+      "label": "스포츠",
+      "href": "/deals"
+    },
+    {
+      "label": "호텔 & 리조트",
+      "href": "/deals"
+    }
+  ],
+  "services": {
+    "masaji": "마사지",
+    "gwi-cheongso": "귀청소",
+    "dupi-keeo-syampu": "헤드스파",
+    "seukinkeeo": "피부관리",
+    "sognunsseob-mic-nunsseob-yeonjang": "속눈썹 & 눈썹",
+    "neil-maeni-pedi": "네일",
+    "wagsing": "제모",
+    "chigwa": "치과",
+    "he-eo-babeo": "헤어스타일링",
+    "piteuniseu": "헬스",
+    "leseutolang": "레스토랑",
+    "travel": "여행",
+    "golpeu": "골프",
+    "sports": "스포츠",
+    "hotel-resort": "호텔 & 리조트",
+    "other-brands": "기타 브랜드"
+  },
+  "footer": {
+    "advertising_cta": {
+      "label": "광고 문의",
+      "href": "https://zalo.me/0896895500"
+    },
+    "partner_banner": {
+      "title": "GlowExplore 파트너 신청",
+      "desc": "매장을 등록하거나 프리미엄 노출 위치를 예약하여 매일 GlowExplore에서 서비스를 찾는 고객에게 브랜드/매장을 홍보하세요.",
+      "btn": "광고/제휴 문의",
+      "btn_sub": "당일 빠른 상담 및 견적 안내",
+      "feat1_title": "프리미엄 노출",
+      "feat1_desc": "메인 배너 및 서비스 카테고리에 노출되어 브랜드 인지도를 높입니다.",
+      "feat2_title": "타겟 고객 확보",
+      "feat2_desc": "원하는 서비스를 적극적으로 찾는 타겟 고객과 직접 연결됩니다.",
+      "feat3_title": "도달률 및 전환율 증대",
+      "feat3_desc": "매장 조회수, 고객 관심도 및 실제 예약/방문 전환 기회를 늘립니다.",
+      "feat4_title": "파트너 전담 지원",
+      "feat4_desc": "매장 등록 설정 지원부터 24/7 전담 상담을 제공합니다."
+    },
+    "main_footer": {
+      "description": "가장 가까운 스파, 뷰티, 피트니스 혜택을 찾아보세요—신뢰할 수 있는 지역 서비스를 빠르게 찾고, 비교하고, 연결하세요.",
+      "information": {
+        "title": "정보",
+        "address": "Tầng 5, 170 Trần Duy Hưng, Phường Yên Hòa",
+        "addressLocality": "Hà Nội",
+        "addressCountry": "VN",
+        "phone": "+84888129100",
+        "email": "support@glowvietnam.com"
+      },
+      "shortcuts": {
+        "title": "바로가기",
+        "items": [
+          {
+            "label": "홈",
+            "href": "/"
+          },
+          {
+            "label": "회사 소개",
+            "href": "/about"
+          },
+          {
+            "label": "개인정보 보호",
+            "href": "/privacy"
+          }
+        ]
+      },
+      "copyright": "© 2024 GlowExplore. 모든 권리 보유."
+    },
+    "seo_links": {
+      "services": {
+        "title": "서비스",
+        "items": [
+          "영양 헤어 워시",
+          "피부 관리",
+          "목 & 어깨 테라피",
+          "영구 제모",
+          "네일",
+          "모든 서비스"
+        ]
+      },
+      "cities": {
+        "title": "도시별",
+        "items": [
+          "하노이",
+          "호치민",
+          "바리아 - 붕따우",
+          "꽝닌",
+          "타인호아",
+          "응에안"
+        ]
+      },
+      "popular": {
+        "title": "인기 서비스",
+        "items": [
+          "허브 헤어 워시",
+          "전신 마사지",
+          "심층 여드름 치료",
+          "콜라겐 속눈썹 펌",
+          "미백 목욕",
+          "기본 피부 관리"
+        ]
+      },
+      "desc": "베트남 최고의 건강 및 미용 플랫폼. 최고의 휴식과 회춘 경험을 제공합니다."
+    },
+    "app_footer": {
+      "tagline": "최고의 현지 경험",
+      "partner_btn": "파트너 되기",
+      "cat_title": "카테고리",
+      "partner_title": "파트너용",
+      "partner_desc": "GlowExplore에 귀하의 서비스와 경험을 등록하세요.",
+      "global_title": "글로벌 GLOW",
+      "global_vn": "Glow 베트남",
+      "global_tl": "Glow 태국",
+      "global_ph": "Glow 필리핀",
+      "copyright": "© 2022. BK 베트남 기술 주식회사 - 사업자 등록번호: 0110124791 - 발행일 21/09/2022",
+      "address": "하노이 옌호아 쩐주이흥 170, 5층",
+      "email": "support@glowexplore.com"
+    }
+  }
+}

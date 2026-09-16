@@ -1,0 +1,18 @@
+{
+  "no_results": "일치하는 결과가 없습니다",
+  "no_deals_title": "표시할 할인이 없습니다",
+  "no_deals_hint": "필터를 조정하거나 다른 지역을 선택해 보세요.",
+  "no_service_title": "어떤 서비스를 찾고 있나요?",
+  "no_service_hint": "서비스를 선택하면 이 지역의 할인 딜을 볼 수 있어요.",
+  "no_service_cta": "마사지 보기",
+  "you_may_also_like": "이런 할인은 어떠세요",
+  "page_info": "페이지 {{current}} / {{total}}",
+  "view_more_deals": "더 많은 거래 보기",
+  "ends_in": "종료 시간",
+  "views": "조회수",
+  "loading": "추가 로딩 중...",
+  "scroll_to_load_more": "스크롤하여 더 불러오기",
+  "loaded_all_results": "모든 결과를 불러왔습니다",
+  "load_more_failed": "추가 불러오기에 실패했습니다. 다시 시도해 주세요",
+  "retry": "다시 시도"
+}

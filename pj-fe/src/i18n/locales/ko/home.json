@@ -1,0 +1,100 @@
+{
+  "seo": {
+    "title": "GlowExplore - 최고의 로컬 체험 - 먹고, 자고, 힐링하고, 탐험하기",
+    "description": "여행만 하지 말고, 현지인처럼 탐험하세요. GlowExplore는 스파, 투어, 맛집, 감성 숙소까지 한곳에 모았습니다 — 진짜 후기로 엄선했으니 쉽고 빠르게 찾고 예약하세요."
+  },
+  "home": {
+    "title": "홈",
+    "what_do_you_need": "오늘 어떤 서비스가 필요하신가요?",
+    "flash_sale_title": "플래시 세일",
+    "recommended_spa_title": "추천 스파",
+    "view_all": "모두 보기",
+    "breadcrumb_home": "홈",
+    "flash_sale_empty": "진행 중인 플래시 세일이 없습니다.",
+    "flash_sale_empty_desc": "플래시 세일 시간이 종료되었습니다. 놓치지 않도록 나중에 다시 확인하세요!",
+    "flash_sale_back_home": "홈으로",
+    "open_now": "영업 중",
+    "service_groups": {
+      "massage-spa": {
+        "title": "마사지 & 스파",
+        "sub_services": "바디 마사지 · 풋 마사지 · 베트남 헤드 스파",
+        "extra_count": "+3"
+      },
+      "beauty-hair": {
+        "title": "뷰티 & 헤어",
+        "sub_services": "네일 · 속눈썹 & 눈썹 · 헤어 & 바버",
+        "extra_count": "+2"
+      },
+      "food-drink": {
+        "title": "맛집 & 카페",
+        "sub_services": "베트남 음식 & 길거리 음식 · 레스토랑 · 카페",
+        "extra_count": "+1"
+      },
+      "tours": {
+        "title": "투어 & 액티비티",
+        "sub_services": "시티/푸드 투어 · 데이 트립 · 쿠킹 클래스",
+        "extra_count": "+3"
+      },
+      "transport": {
+        "title": "교통 & 이동",
+        "sub_services": "공항 픽업/샌딩 · 오토바이/차 렌트 · 전세 운전기사",
+        "extra_count": "+2"
+      },
+      "stay": {
+        "title": "숙소",
+        "sub_services": "호텔 · 리조트 · 홈스테이",
+        "extra_count": "+1"
+      },
+      "health": {
+        "title": "건강 & 의료",
+        "sub_services": "24시 약국 · 국제 병원 · 치과",
+        "extra_count": "+1"
+      },
+      "essentials": {
+        "title": "여행 편의 시설",
+        "sub_services": "eSIM & 유심 · 환전 & ATM · 세탁 서비스",
+        "extra_count": "+3"
+      }
+    },
+    "services": {
+      "massage-spa": "마사지 & 스파",
+      "beauty-hair": "뷰티 & 헤어",
+      "food-drink": "맛집 & 카페",
+      "tours": "투어 & 액티비티",
+      "transport": "교통 & 이동",
+      "stay": "숙소",
+      "health": "건강 & 의료",
+      "essentials": "여행 편의 시설",
+      "massage": "마사지",
+      "ear-spa": "귀 청소",
+      "head-spa": "두피 스파",
+      "skincare": "피부 관리",
+      "lashes-brows": "속눈썹 & 눈썹",
+      "nails": "네일케어",
+      "hair-removal": "제모",
+      "dental": "치과",
+      "hair": "헤어케어",
+      "fitness": "피트니스",
+      "restaurant": "레스토랑",
+      "travel": "여행",
+      "golf": "골프",
+      "sports": "스포츠",
+      "hotel-resort": "호텔 & 리조트",
+      "other-brands": "기타 브랜드"
+    }
+  },
+  "location_toast": {
+    "title": "근처 혜택을 보려면 위치를 켜세요",
+    "subtitle_prompt": "위치 접근을 허용하면 가장 가까운 스파와 혜택을 추천해 드립니다.",
+    "subtitle_denied": "위치가 차단되어 있습니다. 브라우저 주소창의 🔒 아이콘을 눌러 허용한 후 새로고침하세요.",
+    "allow": "허용",
+    "reload": "새로고침",
+    "dismiss": "닫기"
+  },
+  "is_closed_today": "오늘 휴무",
+  "is_open_now": "영업 중",
+  "is_closed": "영업 종료",
+  "opens_at": "{{time}}에 영업 시작",
+  "closes_at": "{{time}}에 영업 종료",
+  "closed_for_today": "오늘 영업 종료"
+}

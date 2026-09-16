@@ -1,0 +1,19 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+.next/
+tsconfig.tsbuildinfo
+
+# Environment — KHÔNG push
+.env
+.env.local
+.env.*.local
+
+# DB dump
+backup-db.sql
+
+# OS
+.DS_Store
+Thumbs.db

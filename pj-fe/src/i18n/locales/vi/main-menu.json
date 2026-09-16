@@ -1,0 +1,199 @@
+{
+  "saved_places": "Địa điểm đã lưu",
+  "top-menu": [
+    {
+      "label": "Khuyến mãi",
+      "href": "/promotions"
+    },
+    {
+      "label": "Tìm cửa hàng",
+      "href": "/store-locator"
+    }
+  ],
+  "search": {
+    "placeholder": "Tìm kiếm dịch vụ, salon...",
+    "suggestions": "Gợi ý tìm kiếm",
+    "loading": "Đang tải...",
+    "min_chars": "Nhập tối thiểu 2 ký tự để tìm kiếm",
+    "no_results": "Không tìm thấy gợi ý"
+  },
+  "main-menu": [
+    {
+      "label": "Massage",
+      "href": "/massage"
+    },
+    {
+      "label": "Lấy ráy tai",
+      "href": "/lay-ray-tai"
+    },
+    {
+      "label": "Gội đầu dưỡng sinh",
+      "href": "/goi-dau-duong-sinh"
+    },
+    {
+      "label": "Chăm sóc da",
+      "href": "/cham-soc-da-mat"
+    },
+    {
+      "label": "Lông mi & Lông mày",
+      "href": "/noi-mi-may"
+    },
+    {
+      "label": "Nails",
+      "href": "/nail"
+    },
+    {
+      "label": "Triệt lông",
+      "href": "/wax"
+    },
+    {
+      "label": "Nha khoa",
+      "href": "/nha-khoa"
+    },
+    {
+      "label": "Làm tóc",
+      "href": "/toc-barber"
+    },
+    {
+      "label": "Fitness",
+      "href": "/fitness"
+    },
+    {
+      "label": "Nhà hàng",
+      "href": "/deals"
+    },
+    {
+      "label": "Du lịch",
+      "href": "/deals"
+    },
+    {
+      "label": "Golf",
+      "href": "/deals"
+    },
+    {
+      "label": "Thể thao",
+      "href": "/deals"
+    },
+    {
+      "label": "Khách sạn & resort",
+      "href": "/deals"
+    }
+  ],
+  "services": {
+    "massage": "Massage",
+    "ear-spa": "Lấy ráy tai",
+    "head-spa": "Gội đầu dưỡng sinh",
+    "skincare": "Chăm sóc da",
+    "lashes-brows": "Lông mi & Lông mày",
+    "nail": "Nails",
+    "hair-removal": "Triệt lông",
+    "dental": "Nha khoa",
+    "hair": "Làm tóc",
+    "fitness": "Fitness",
+    "restaurant": "Nhà hàng",
+    "travel": "Du lịch",
+    "golf": "Golf",
+    "sports": "Thể thao",
+    "hotel-resort": "Khách sạn & resort",
+    "other-brands": "Nhãn hàng khác"
+  },
+  "footer": {
+    "advertising_cta": {
+      "label": "Liên hệ để quảng cáo",
+      "href": "https://zalo.me/0896895500"
+    },
+    "partner_banner": {
+      "title": "Trở thành đối tác GlowExplore",
+      "desc": "Đăng ký gian hàng hoặc đặt vị trí hiển thị để đưa thương hiệu của bạn đến đúng khách hàng đang tìm kiếm dịch vụ mỗi ngày trên GlowExplore.",
+      "btn": "Liên hệ để quảng cáo",
+      "btn_sub": "Nhận tư vấn và báo giá nhanh trong ngày",
+      "feat1_title": "Hiển thị nổi bật",
+      "feat1_desc": "Xuất hiện trên banner và các danh mục dịch vụ, tăng độ nhận diện thương hiệu.",
+      "feat2_title": "Tiếp cận đúng khách hàng",
+      "feat2_desc": "Kết nối với khách hàng đang có nhu cầu tìm kiếm dịch vụ phù hợp.",
+      "feat3_title": "Gia tăng lượt tiếp cận",
+      "feat3_desc": "Tăng lượt xem gian hàng, lượt quan tâm và cơ hội chuyển đổi.",
+      "feat4_title": "Đồng hành cùng đối tác",
+      "feat4_desc": "Hỗ trợ thiết lập gian hàng, tư vấn và đồng hành 24/7."
+    },
+    "main_footer": {
+      "description": "Khám phá các ưu đãi spa, làm đẹp và thể hình tốt nhất gần bạn—tìm kiếm, so sánh và kết nối nhanh chóng với các dịch vụ địa phương uy tín.",
+      "information": {
+        "title": "Thông tin",
+        "address": "Tầng 5, 170 Trần Duy Hưng, Phường Yên Hòa",
+        "addressLocality": "Hà Nội",
+        "addressCountry": "VN",
+        "phone": "+84888129100",
+        "email": "support@glowvietnam.com"
+      },
+      "shortcuts": {
+        "title": "Truy cập nhanh",
+        "items": [
+          {
+            "label": "Trang chủ",
+            "href": "/"
+          },
+          {
+            "label": "Về chúng tôi",
+            "href": "/about"
+          },
+          {
+            "label": "Chính sách bảo mật",
+            "href": "/privacy"
+          }
+        ]
+      },
+      "copyright": "© 2024 GlowExplore. Bảo lưu mọi quyền."
+    },
+    "seo_links": {
+      "services": {
+        "title": "Dịch vụ",
+        "items": [
+          "Gội đầu dưỡng sinh",
+          "Chăm sóc da mặt",
+          "Trị liệu cổ vai gáy",
+          "Triệt lông vĩnh viễn",
+          "Làm móng (Nails)",
+          "Tất cả dịch vụ"
+        ]
+      },
+      "cities": {
+        "title": "Theo thành phố",
+        "items": [
+          "Hà Nội",
+          "TP. Hồ Chí Minh",
+          "Bà Rịa - Vũng Tàu",
+          "Quảng Ninh",
+          "Thanh Hóa",
+          "Nghệ An"
+        ]
+      },
+      "popular": {
+        "title": "Dịch vụ phổ biến",
+        "items": [
+          "Gội đầu thảo dược",
+          "Massage toàn thân",
+          "Trị mụn chuyên sâu",
+          "Uốn mi collagen",
+          "Tắm trắng phi thuyền",
+          "Chăm sóc da cơ bản"
+        ]
+      },
+      "desc": "Nền tảng chăm sóc sức khỏe và làm đẹp hàng đầu Việt Nam. Mang lại trải nghiệm thư giãn và trẻ hóa tuyệt vời nhất."
+    },
+    "app_footer": {
+      "tagline": "Trải nghiệm địa phương đỉnh nhất",
+      "partner_btn": "Trở thành đối tác",
+      "cat_title": "DANH MỤC",
+      "partner_title": "DÀNH CHO ĐỐI TÁC",
+      "partner_desc": "Đưa dịch vụ và trải nghiệm của bạn lên GlowExplore.",
+      "global_title": "GLOW TOÀN CẦU",
+      "global_vn": "Glow Việt Nam",
+      "global_tl": "Glow Thái Lan",
+      "global_ph": "Glow Philippines",
+      "copyright": "© 2022. Công ty Cổ Phần Công nghệ BK Việt Nam - GPĐKKD: 0110124791 - Cấp ngày 21/09/2022",
+      "address": "Tầng 5, 170 Trần Duy Hưng, Yên Hòa, Hà Nội",
+      "email": "support@glowexplore.com"
+    }
+  }
+}

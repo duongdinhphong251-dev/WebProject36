@@ -1,0 +1,11 @@
+export const API_V1_PREFIX = '/api/v1';
+export const API_V2_PREFIX = '/api/v2';
+
+export enum EnumStatusCode {
+  SUCCESS = 'SUCCESS',
+  INVALID_PARAMS = 'INVALID_PARAMS',
+  FETCH_ERROR = 'FETCH_ERROR',
+  ESIM_NOT_SUPPORTED = 'ESIM_NOT_SUPPORTED',
+  SERVER_ERROR = 'SERVER_ERROR',
+  TOO_MANY_REQUESTS = 'TOO_MANY_REQUESTS',
+}

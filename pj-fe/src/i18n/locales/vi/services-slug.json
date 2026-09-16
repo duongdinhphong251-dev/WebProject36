@@ -1,0 +1,18 @@
+{
+  "no_results": "Không tìm thấy kết quả phù hợp",
+  "no_deals_title": "Chưa có ưu đãi phù hợp",
+  "no_deals_hint": "Thử chỉnh bộ lọc hoặc chọn khu vực khác.",
+  "no_service_title": "Bạn muốn xem dịch vụ nào?",
+  "no_service_hint": "Chọn một dịch vụ để xem ưu đãi trong khu vực này.",
+  "no_service_cta": "Xem Massage",
+  "you_may_also_like": "Có thể bạn cũng thích",
+  "page_info": "Trang {{current}} / {{total}}",
+  "view_more_deals": "Xem thêm các ưu đãi khác",
+  "ends_in": "Kết thúc trong",
+  "views": "lượt xem",
+  "loading": "Đang tải thêm...",
+  "scroll_to_load_more": "Cuộn để tải thêm",
+  "loaded_all_results": "Đã hiển thị tất cả kết quả",
+  "load_more_failed": "Không tải được thêm kết quả. Vui lòng thử lại.",
+  "retry": "Thử lại"
+}
