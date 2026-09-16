@@ -1,83 +1,53 @@
-\# Nhom36 — Web tìm kiếm spa \& deal
+# Nhom36 — Spa & Deal Search Web
 
+A web project that lets users search for spa vouchers by location.
 
+Supports Vietnamese and English.
 
-Web project cho phép người dùng tìm kiếm voucer spa theo khu vực
+## Tech Stack
 
-hỗ trợ tiếng việt, tiếng anh 
-
-
-\## Tech 
-
-| Layer | Công nghệ |
-
+| Layer | Technology |
 |---|---|
+| **Frontend** | Next.js 16, React 19, TypeScript, Tailwind CSS |
+| **Backend** | NestJS 11, Drizzle ORM, TypeScript |
+| **Database** | PostgreSQL 16 |
+| **Runtime** | Node.js >= 20 |
 
-| \*\*Frontend\*\* | Next.js 16, React 19, TypeScript, Tailwind CSS |
-
-| \*\*Backend\*\* | NestJS 11, Drizzle ORM, TypeScript |
-
-| \*\*Database\*\* | PostgreSQL 16 |
-
-| \*\*Runtime\*\* | Node.js >= 20 |
-
-
-
-\## cấu trúc dự án 
+## Project Structure
+ 
 
 Project/
-
 ├── pj-be/ # Backend — NestJS + Drizzle
-
-│ ├── src/ # Code chính
-
-│ │ ├── modules/ # Các module nghiệp vụ (spas, deals, services, ...)
-
-│ │ ├── db/ # Schema + kết nối DB
-
-│ │ └── common/ # Utilities dùng chung
-
+│ ├── src/ # Source code
+│ │ ├── modules/ # Business modules (spas, deals, services, ...)
+│ │ ├── db/ # Schema + DB connection
+│ │ └── common/ # Shared utilities
 │ ├── drizzle/ # Migration files
-
-│ ├── seed-demo.sql # Data mẫu (spas, deals, banners, cities)
-
-│ ├── seed-locations.sql# Data mẫu (spa\_locations)
-
-│ └── .env.example # Mẫu config
-
+│ ├── seed-demo.sql # Sample data (spas, deals, banners, cities)
+│ ├── seed-locations.sql# Sample data (spa_locations)
+│ └── .env.example # Config template
 ├── pj-fe/ # Frontend — Next.js
-
 │ ├── src/
-
 │ │ ├── app/ # Routes (App Router)
-
 │ │ ├── components/ # UI components
-
-│ │ ├── services/ # Gọi API BE
-
-│ │ └── i18n/ # Đa ngôn ngữ (vi/en)
-
-│ ├── public/ # Ảnh, assets
-
-│ └── .env.exemple # Mẫu config
-
-├── HUONG-DAN-CHAY.md # Hướng dẫn chạy chi tiết
-
-└── README.md # File này
+│ │ ├── services/ # Backend API calls
+│ │ └── i18n/ # Multi-language (vi/en)
+│ ├── public/ # Images, assets
+│ └── .env.exemple # Config template
+├── HUONG-DAN-CHAY.md # Detailed setup instructions
+└── README.md # This file
 
 
 
-\## tính năng 
+## Features
 
-\- 🏠 \*\*Trang chủ:\*\* banner quảng cáo, 4 danh mục dịch vụ chính, spa gợi ý ( hiện tại chỉ có 1 dịch vụ) 
+- 🏠 **Homepage:** ad banners, 4 main service categories, recommended spas (currently only 1 service is active)
+- 🔍 **Search spas by region:** filter by city, price, rating
+- 💆 **Spa detail:** information, images, reviews
+- 🎁 **Deals / promotions:** display currently running offers
+- 🌐 **Multi-language:** Vietnamese, English
 
-\- 🔍 \*\*Tìm kiếm spa theo khu vực:\*\* lọc theo thành phố, giá, rating
-
-\- 💆 \*\*Chi tiết spa:\*\* thông tin, hình ảnh, đánh giá
-
-\- 🎁 \*\*Deal/khuyến mãi:\*\* hiển thị các ưu đãi đang chạy
-
-\- 🌐 \*\*Đa ngôn ngữ:\*\* Tiếng Việt, English
+## Workflow
 
 
 
