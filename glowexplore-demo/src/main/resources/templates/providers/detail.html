@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<head>
+    <meta charset="UTF-8"/>
+    <title th:text="${provider.name} + ' - GlowExplore (Demo)'">Chi tiết Provider</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+</head>
+<body>
+<div class="topbar">GlowExplore <span>bản demo rút gọn - trang chi tiết Spa</span></div>
+
+<div class="container">
+    <a class="back-link" th:href="@{/providers}">&larr; Quay lại danh sách</a>
+
+    <div class="photo-strip">
+        <img th:each="photo : ${provider.photos}" th:src="${photo}" alt="Ảnh cơ sở"/>
+    </div>
+
+    <div class="detail-header">
+        <h1 style="margin:0 0 6px;" th:text="${provider.name}">Tên spa</h1>
+        <span class="rating" th:text="${#numbers.formatDecimal(provider.ratingValue, 1, 1)} + ' ★'">4.8 ★</span>
+        <span style="color:#535862; font-size:13px;"
+              th:text="'(' + ${provider.reviewCount} + ' đánh giá)'"></span>
+        <span th:class="${provider.openNow} ? 'open-status open' : 'open-status closed'"
+              th:text="${provider.openNow} ? '· Đang mở cửa' : '· Đã đóng cửa'"></span>
+
+        <div class="tags">
+            <span class="tag" th:each="a : ${provider.amenities}" th:text="${a}"></span>
+        </div>
+
+        <p style="margin:10px 0 0;" th:text="${provider.address} + ', ' + ${provider.district} + ', ' + ${provider.city}">
+            Địa chỉ
+        </p>
+    </div>
+
+    <div class="section" th:if="${!#lists.isEmpty(provider.deals)}">
+        <h2>Ưu đãi &amp; Bảng giá</h2>
+        <table class="pricing">
+            <tr th:each="d : ${provider.deals}">
+                <td th:text="${d.title}">Tên dịch vụ</td>
+                <td style="text-align:right;">
+                    <span class="price-old" th:text="${#numbers.formatInteger(d.originalPrice, 0, 'COMMA')} + 'đ'"></span>
+                    <span class="price-new" th:text="${#numbers.formatInteger(d.salePrice, 0, 'COMMA')} + 'đ'"></span>
+                    <span class="badge" th:text="'-' + ${d.discountPercent} + '%'"></span>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="section">
+        <h2>Giờ mở cửa</h2>
+        <table class="pricing">
+            <tr th:each="h : ${provider.openingHours}">
+                <td th:text="${h.dayLabel}">Thứ 2</td>
+                <td style="text-align:right;" th:text="${h.openTime} + ' - ' + ${h.closeTime}"></td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="section" th:if="${provider.description != null}">
+        <h2>Giới thiệu</h2>
+        <p th:text="${provider.description}" style="line-height:1.6; color:#5b6b58;"></p>
+    </div>
+
+    <div class="section" th:if="${!#lists.isEmpty(provider.reviews)}">
+        <h2>Đánh giá khách hàng</h2>
+        <div class="review" th:each="r : ${provider.reviews}">
+            <span class="author" th:text="${r.authorName}"></span>
+            <span class="rating" th:text="${r.rating} + ' ★'" style="margin-left:8px;"></span>
+            <span style="color:#a4a7ae; font-size:12px; margin-left:8px;" th:text="${r.reviewedAt}"></span>
+            <p style="margin:6px 0 0;" th:text="${r.content}"></p>
+        </div>
+    </div>
+
+    <div class="section contact-box">
+        <h2>Liên hệ</h2>
+        <a class="btn-call" th:if="${provider.phone != null}" th:href="'tel:' + ${provider.phone}"
+           th:text="'📞 Gọi ' + ${provider.phone}"></a>
+        <p th:if="${provider.zaloUrl != null}">
+            <a th:href="${provider.zaloUrl}" target="_blank">Nhắn Zalo</a>
+        </p>
+        <p th:if="${provider.facebookUrl != null}">
+            <a th:href="${provider.facebookUrl}" target="_blank">Fanpage Facebook</a>
+        </p>
+    </div>
+</div>
+</body>
+</html>
