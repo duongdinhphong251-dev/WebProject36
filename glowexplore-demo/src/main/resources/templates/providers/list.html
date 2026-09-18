@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<head>
+    <meta charset="UTF-8"/>
+    <title>GlowExplore (Demo) - Danh sách Provider</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+</head>
+<body>
+<div class="topbar">GlowExplore <span>bản demo rút gọn - trang danh sách Provider</span></div>
+
+<div class="container">
+    <form class="filters" method="get" th:action="@{/providers}">
+        <select name="city">
+            <option value="">Tất cả thành phố</option>
+            <option th:each="c : ${cities}" th:value="${c}" th:text="${c}"
+                    th:selected="${c == selectedCity}"></option>
+        </select>
+        <select name="service">
+            <option value="">Tất cả dịch vụ</option>
+            <option th:each="s : ${services}" th:value="${s}" th:text="${s}"
+                    th:selected="${s == selectedService}"></option>
+        </select>
+        <select name="sortBy">
+            <option value="rating" th:selected="${sortBy == 'rating'}">Rating cao nhất</option>
+            <option value="reviewCount" th:selected="${sortBy == 'reviewCount'}">Nhiều đánh giá nhất</option>
+        </select>
+        <button type="submit">Lọc</button>
+    </form>
+
+    <div th:if="${#lists.isEmpty(providers)}" class="empty">
+        Không tìm thấy provider phù hợp bộ lọc.
+    </div>
+
+    <a th:each="p : ${providers}" class="card" th:href="@{'/providers/' + ${p.slug}}">
+        <img th:src="${p.avatarUrl}" th:alt="${p.name}"/>
+        <div>
+            <h3 th:text="${p.name}">Tên provider</h3>
+            <span class="rating" th:text="${#numbers.formatDecimal(p.ratingValue, 1, 1)} + ' ★'">4.8 ★</span>
+            <span style="color:#535862; font-size:12.5px;" th:text="'(' + ${p.reviewCount} + ' đánh giá)'"></span>
+            <span class="badge" th:if="${p.bestDeal != null}"
+                  th:text="'-' + ${p.bestDeal.discountPercent} + '%'"></span>
+            <div class="meta" th:text="${p.address} + ', ' + ${p.district} + ', ' + ${p.city}"></div>
+        </div>
+    </a>
+</div>
+</body>
+</html>
