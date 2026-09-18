@@ -122,6 +122,11 @@ npx drizzle-kit push --config=drizzle.config.ts
 
 ```powershell
 Get-Content seed-full.sql | docker exec -i pj-postgres psql -U postgres -d tuoi_db
+# Hoặc nếu chạy từng file:
+# Get-Content seed-demo.sql | docker exec -i pj-postgres psql -U postgres -d tuoi_db
+# Get-Content seed-locations.sql | docker exec -i pj-postgres psql -U postgres -d tuoi_db
+# Get-Content seed-services.sql | docker exec -i pj-postgres psql -U postgres -d tuoi_db
+# Get-Content seed-more-data.sql | docker exec -i pj-postgres psql -U postgres -d tuoi_db
 ```
 
 > File `seed-full.sql` chứa toàn bộ data: spas, deals, banners, cities, seo_nodes.

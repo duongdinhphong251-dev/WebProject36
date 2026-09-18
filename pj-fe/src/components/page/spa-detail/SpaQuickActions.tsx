@@ -60,7 +60,7 @@ export function SpaQuickActions({
     "bg-white rounded-xl py-2.5 px-1 flex flex-col items-center justify-center gap-1.5 shadow-[0_1px_2px_rgba(9,62,6,0.06)] text-[10.5px] font-medium text-[#093E06] hover:bg-[#F5F7F4] transition-colors cursor-pointer border border-transparent";
 
   return (
-    <div className="grid grid-cols-4 gap-2 w-full">
+    <div className="grid grid-cols-3 gap-2 w-full">
       {/* 1. Chỉ đường */}
       {mapsUrl ? (
         <a
@@ -100,22 +100,7 @@ export function SpaQuickActions({
         </button>
       )}
 
-      {/* 3. Lưu */}
-      <button
-        type="button"
-        onClick={() => toggleSaveSpa(spaId)}
-        className={cn(itemClass, saved && "bg-[#EAF2E8] border-[#40813D]/20")}
-      >
-        <Bookmark
-          className={cn(
-            "size-[19px] text-[#40813D] stroke-[2]",
-            saved && "fill-[#40813D]",
-          )}
-        />
-        <span>{saved ? (t("saved") || "Đã lưu") : (t("save") || "Lưu")}</span>
-      </button>
-
-      {/* 4. Chia sẻ */}
+      {/* 3. Chia sẻ */}
       <Popover open={shareOpen} onOpenChange={setShareOpen}>
         <PopoverTrigger asChild>
           <button

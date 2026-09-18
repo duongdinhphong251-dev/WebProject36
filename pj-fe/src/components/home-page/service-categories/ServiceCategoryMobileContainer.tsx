@@ -9,9 +9,9 @@ interface Props {
 
 export function ServiceCategoryMobileContainer({ locale }: Props) {
   return (
-    <div className="grid grid-cols-4 gap-2 sm:gap-2.5 w-full">
+    <div className="grid grid-cols-5 gap-2 sm:gap-2.5 w-full">
       {MAIN_SERVICE_GROUPS.map((key, index) => (
-        <ServiceCategoryItem key={key} serviceKey={key} locale={locale} priority={index < 4} variant="vertical" />
+        <ServiceCategoryItem key={key} serviceKey={key} locale={locale} priority={index < 5} variant="vertical" />
       ))}
     </div>
   );

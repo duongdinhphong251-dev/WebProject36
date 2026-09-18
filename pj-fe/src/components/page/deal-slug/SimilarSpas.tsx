@@ -1,5 +1,3 @@
-import { ChevronRight } from "lucide-react";
-import Link from "next/link";
 import type { LocaleTypes } from "@/i18n/settings";
 import { getTranslation } from "@/i18n/server-cache";
 import { resolvePage } from "@/services/api/spa-api";
@@ -20,27 +18,24 @@ export async function SimilarSpas({
   locale,
   currentSpaId,
   serviceSlug,
-  lat,
-  lng,
 }: SimilarSpasProps) {
-  if (!serviceSlug) return null;
+  const targetSlug = serviceSlug || "massage-spa";
 
   const { t } = await getTranslation(locale, "deal-detail");
 
   let groups: Awaited<ReturnType<typeof resolvePage>>["deals"]["data"] = [];
   try {
     const payload = await resolvePage({
-      url: serviceSlug,
+      url: targetSlug,
       locale,
       page: 1,
-      limit: MAX_SIMILAR + 1, // +1 để bù trường hợp phải loại spa hiện tại
-      lat: lat ?? undefined,
-      lng: lng ?? undefined,
-      sortBy: "distance",
+      limit: 20,
     });
-    groups = (payload?.deals?.data ?? [])
-      .filter((g) => g.spa.id !== currentSpaId)
-      .slice(0, MAX_SIMILAR);
+    const all = (payload?.deals?.data ?? []).filter(
+      (g) => String(g.spa.id) !== String(currentSpaId)
+    );
+    // Hiển thị ngẫu nhiên (random)
+    groups = all.sort(() => 0.5 - Math.random()).slice(0, MAX_SIMILAR);
   } catch {
     return null;
   }
@@ -48,12 +43,13 @@ export async function SimilarSpas({
   if (groups.length === 0) return null;
 
   const title =
-    t("similar_spas_nearby") !== "similar_spas_nearby"
-      ? t("similar_spas_nearby")
-      : "Spa tương tự gần bạn";
-
-  const viewAllText = locale === "en" ? "View all" : locale === "ko" ? "전체 보기" : "Xem tất cả";
-  const viewAllHref = `/${locale}/${serviceSlug}`;
+    t("other_spas") && t("other_spas") !== "other_spas"
+      ? t("other_spas")
+      : locale === "en"
+        ? "Other spas"
+        : locale === "ko"
+          ? "다른 스파"
+          : "Các spa khác";
 
   return (
     <section className="w-full pt-2 pb-4">
@@ -61,15 +57,6 @@ export async function SimilarSpas({
         <h2 className="text-[15px] md:text-[20px] font-bold tracking-tight text-[#093E06]">
           {title}
         </h2>
-        
-        <Link
-          href={viewAllHref}
-          className="group inline-flex items-center gap-1 text-[13px] font-semibold text-[#40813D] hover:text-[#2a5828] transition-colors shrink-0"
-          aria-label={`Xem tất cả ${title}`}
-        >
-          <span>{viewAllText}</span>
-          <ChevronRight className="w-3.5 h-3.5 stroke-[2.5] shrink-0" />
-        </Link>
       </div>
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
         {groups.map((g) => {

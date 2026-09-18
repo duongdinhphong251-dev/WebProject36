@@ -18,7 +18,7 @@ import useTranslate from "@/hooks/useTranslate";
 
 // Tăng số này mỗi khi cấu trúc SpaDealsGroupDto/SpaBasicDto thay đổi field
 // quan trọng — đảm bảo cache cũ tự động bị bỏ qua thay vì đè lên data mới
-const LISTING_CACHE_VERSION = 2;
+const LISTING_CACHE_VERSION = 4;
 
 type ScrollState = {
   version: number;
@@ -99,7 +99,7 @@ export function InfiniteSpaDealsListing({
   // Restore from sessionStorage AFTER hydration (back navigation UX)
   useEffect(() => {
     const saved = readScrollState(stateKey);
-    if (saved) {
+    if (saved && (saved.groups.length > 0 || initialGroups.length === 0)) {
       restoredFromCache.current = true;
       setGroups(saved.groups);
       setPagination(saved.pagination);

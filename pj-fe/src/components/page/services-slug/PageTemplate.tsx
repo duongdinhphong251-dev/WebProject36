@@ -9,9 +9,6 @@ import { MAIN_SERVICE_GROUPS, getParentServiceKey, resolveServiceKey } from "@/c
 import { PageHero } from "./PageHero";
 import { CategoryMobileHeader } from "./CategoryMobileHeader";
 import { GroupTabs } from "./GroupTabs";
-import { ListingSidebar } from "./ListingSidebar";
-import { FilterBar } from "./FilterBar";
-import { FilterSort } from "./FilterSort";
 import { InfiniteSpaDealsListing } from "./InfiniteSpaDealsListing";
 import { UserGeoForHubDistance } from "./UserGeoForHubDistance";
 import { Container } from "@/components/ui/container";
@@ -197,14 +194,6 @@ export async function PageTemplate({
         />
       </div>
 
-      <Suspense fallback={null}>
-        <UserGeoForHubDistance
-          enabled={geoDistanceHub}
-          cities={filters.cities}
-          shouldSetCity={!filters.currentCity}
-        />
-      </Suspense>
-
       {/* GroupTabs & FilterBar */}
       <div className="md:sticky md:top-20 z-30 bg-app-bg relative">
         <Container maxWidth={false} className="max-w-[1240px] px-4 md:px-5">
@@ -216,9 +205,6 @@ export async function PageTemplate({
                 currentCitySlug={filters.currentCity?.slug}
               />
             </div>
-            <div className="md:hidden">
-              <FilterBar payloadFilters={filters} />
-            </div>
           </div>
         </Container>
       </div>
@@ -226,45 +212,35 @@ export async function PageTemplate({
       {/* Main Container */}
       <div className="pt-4 pb-6 max-md:py-4">
         <Container maxWidth={false} className="max-w-[1240px] px-4 md:px-5">
-          <div className="flex flex-col md:flex-row gap-6 items-start">
-            <ListingSidebar payloadFilters={filters} locale={locale} groupTitle={parentGroupTitle} />
-
-            <div className="flex-1 min-w-0 w-full flex flex-col gap-6">
-              {/* Header Content Area trên Desktop: Tiêu đề + Sắp xếp + Chuyển đổi Tiền tệ */}
-              <div className="hidden md:flex items-center justify-between gap-4 w-full">
-                <div className="flex flex-col gap-1">
-                  <h2 className="text-[28px] font-bold text-[#093E06] leading-tight">
-                    {pageTitle}
-                  </h2>
-                  <div className="text-[15px] font-normal text-[#5B6B58]">
-                    <span className="font-semibold text-[#093E06]">
-                      {deals.meta?.total ?? 0} {tFilter("places_total") || "địa điểm"}
-                    </span>
-                    {currentCityName
-                      ? ` ${tFilter("in_city", { city: currentCityName })}`
-                      : ""}
-                  </div>
+          <div className="w-full flex flex-col gap-6">
+            {/* Header Content Area trên Desktop: Tiêu đề */}
+            <div className="hidden md:flex items-center justify-between gap-4 w-full">
+              <div className="flex flex-col gap-1">
+                <h2 className="text-[28px] font-bold text-[#093E06] leading-tight">
+                  {pageTitle}
+                </h2>
+                <div className="text-[15px] font-normal text-[#5B6B58]">
+                  <span className="font-semibold text-[#093E06]">
+                    {deals.meta?.total ?? 0} {tFilter("places_total") || "địa điểm"}
+                  </span>
+                  {currentCityName
+                    ? ` ${tFilter("in_city", { city: currentCityName })}`
+                    : ""}
                 </div>
-
-                <Suspense fallback={null}>
-                  <div className="flex items-center shrink-0">
-                    <FilterSort />
-                  </div>
-                </Suspense>
               </div>
-
-              {children}
-              <InfiniteSpaDealsListing
-                initialGroups={deals.data}
-                initialPagination={deals.meta}
-                locale={locale}
-                resolveUrl={resolveUrl}
-                lat={lat}
-                lng={lng}
-                flashSale={flashSale}
-                flashSaleHub={!!flashSaleHub}
-              />
             </div>
+
+            {children}
+            <InfiniteSpaDealsListing
+              initialGroups={deals.data}
+              initialPagination={deals.meta}
+              locale={locale}
+              resolveUrl={resolveUrl}
+              lat={lat}
+              lng={lng}
+              flashSale={flashSale}
+              flashSaleHub={!!flashSaleHub}
+            />
           </div>
         </Container>
       </div>

@@ -100,16 +100,6 @@ export function NearbySpaCard({
                 </span>
               </>
             )}
-
-            {/* Distance & Dot separator (#9BA898 & #5B6B58) */}
-            {spa.distanceKm != null && spa.distanceKm >= 0 && (
-              <div className="flex items-center gap-1 shrink-0">
-                <span className="text-[#9BA898] font-normal shrink-0">·</span>
-                <span className="font-medium text-[#5B6B58]">
-                  {formatDistanceKm(spa.distanceKm)}
-                </span>
-              </div>
-            )}
           </div>
 
           {/* Opening Hours Status (Dot 6x6, #40813D) */}

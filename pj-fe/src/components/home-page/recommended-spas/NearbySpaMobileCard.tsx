@@ -86,16 +86,6 @@ export function NearbySpaMobileCard({
               </span>
             </>
           )}
-
-          {/* Distance */}
-          {spa.distanceKm != null && spa.distanceKm >= 0 && (
-            <div className="flex items-center gap-1 shrink-0">
-              <span className="text-[#9BA898] font-normal shrink-0">·</span>
-              <span className="font-medium text-[#5B6B58]">
-                {formatDistanceKm(spa.distanceKm)}
-              </span>
-            </div>
-          )}
         </div>
 
         {/* Dòng Giá / Deal: Hiện trực tiếp 1 dòng súc tích, không bọc hộp xanh theo đúng ảnh mẫu */}

@@ -57,13 +57,6 @@ export function DealMobileSpaInfo({ deal, t, locale }: DealMobileSpaInfoProps) {
               </>
             )}
 
-            {spa.distanceKm != null && spa.distanceKm >= 0 && (
-              <>
-                <span className="text-[#9BA898] font-normal">·</span>
-                <span className="font-medium">{formatDistanceKm(spa.distanceKm)}</span>
-              </>
-            )}
-
             {openingStatus && (
               <>
                 <span className="text-[#9BA898] font-normal">·</span>

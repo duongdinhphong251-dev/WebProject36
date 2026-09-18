@@ -1,17 +1,17 @@
-import { ChevronRight } from "lucide-react";
 import { getRecommendedSpas } from "@/services/api/home-api";
 import { Container } from "@/components/ui/container";
-import Link from "next/link";
 import { NearbySpasWithClientGeo } from "./NearbySpasWithClientGeo";
-import { getServerLocation } from "@/libs/server-location";
 
 interface HomeNearbySpasSectionProps {
   locale?: string;
 }
 
 export async function HomeNearbySpasSection({ locale = "vi" }: HomeNearbySpasSectionProps) {
-  const coords = await getServerLocation();
-  const spas = await getRecommendedSpas({ limit: 4, locale, lat: coords?.lat, lng: coords?.lng }).catch(() => []);
+  const allSpas = await getRecommendedSpas({ limit: 20, locale }).catch(() => []);
+  const spas = (allSpas || [])
+    .map((s) => ({ ...s, distanceKm: undefined }))
+    .sort(() => 0.5 - Math.random())
+    .slice(0, 4);
 
   if (!spas || spas.length === 0) {
     return null;
@@ -19,14 +19,10 @@ export async function HomeNearbySpasSection({ locale = "vi" }: HomeNearbySpasSec
 
   const title =
     locale === "en"
-      ? "Open Near You"
+      ? "Top Deals Available"
       : locale === "ko"
-        ? "내 주변 오픈 매장"
-        : "Gần bạn, đang mở";
-
-  const viewAllText =
-    locale === "en" ? "View all" : locale === "ko" ? "전체 보기" : "Xem tất cả";
-  const viewAllHref = `/${locale}/spas?isOpenNow=true`;
+        ? "추천 딜"
+        : "Deal ngon hiện có";
 
   return (
     <section className="w-full pt-[13px] pb-[16px] md:py-5 overflow-x-hidden" aria-label={title}>
@@ -36,19 +32,9 @@ export async function HomeNearbySpasSection({ locale = "vi" }: HomeNearbySpasSec
           <h2 className="text-[15px] md:text-[20px] font-bold tracking-tight text-[#093E06]">
             {title}
           </h2>
-
-          <Link
-            href={viewAllHref}
-            className="group inline-flex items-center gap-1 text-[13px] font-semibold text-[#40813D] hover:text-[#2a5828] transition-colors shrink-0"
-            aria-label={`Xem tất cả ${title}`}
-          >
-            <span>{viewAllText}</span>
-            <ChevronRight className="w-3.5 h-3.5 stroke-[2.5] shrink-0" />
-          </Link>
         </div>
 
-
-        {/* Carousel with client geo-sorting */}
+        {/* Carousel / Cards */}
         <NearbySpasWithClientGeo initialSpas={spas} locale={locale} />
       </Container>
     </section>

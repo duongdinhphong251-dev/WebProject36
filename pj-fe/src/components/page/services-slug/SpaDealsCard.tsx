@@ -11,14 +11,11 @@ import { dealTrackingSlug } from "@/libs/deal-slug";
 import { deriveDisplayDiscountPercent } from "@/libs/deal-discount-percent";
 import { useCurrencyPreference } from "@/hooks/useCurrencyPreference";
 import { getOpeningStatus, type OpeningStatus } from "@/libs/opening-hours";
-import { formatDistanceKm } from "@/libs/distance-formatter";
 import useTranslate from "@/hooks/useTranslate";
 import {
   resolveSpaListingImageSrc,
   shouldBypassNextImageOptimization,
 } from "@/libs/spa-image-url";
-import { useLocationStore } from "@/stores/location/useLocationStore";
-import { calculateDistanceKm } from "@/libs/geo-distance";
 
 const FALLBACK_SPA_THUMBNAIL = "/assets/images/common/logo_x.png";
 
@@ -139,13 +136,6 @@ export const SpaDealsCard = memo(function SpaDealsCard({
       })
     : 0;
 
-  const userCoords = useLocationStore((s) => s.coords);
-  
-  let displayDistance = spa.distanceKm;
-  if (displayDistance == null && userCoords && spa.lat != null && spa.lng != null) {
-    displayDistance = calculateDistanceKm(userCoords.latitude, userCoords.longitude, spa.lat, spa.lng);
-  }
-
   const spaHref = currentServiceSlug
     ? `/provider/${spa.slug}?ref_service=${currentServiceSlug}`
     : `/provider/${spa.slug}`;
@@ -196,13 +186,6 @@ export const SpaDealsCard = memo(function SpaDealsCard({
                 {spa.viewCount ? spa.viewCount.toLocaleString("vi-VN") : "0"}
               </span>
             </div>
-
-            {displayDistance != null && displayDistance >= 0 && (
-              <>
-                <span className="text-[#9BA898]">·</span>
-                <span>{formatDistanceKm(displayDistance)}</span>
-              </>
-            )}
           </div>
 
           {/* Opening hours status */}

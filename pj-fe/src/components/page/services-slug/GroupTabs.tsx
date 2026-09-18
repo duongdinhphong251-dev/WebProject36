@@ -22,7 +22,7 @@ export function GroupTabs({ locale, labels, currentCitySlug }: GroupTabsProps) {
   const params = useParams();
   const currentSlug = params?.serviceSlug as string;
   const currentLocale = (locale as LocaleTypes) || "vi";
-  const currentServiceKey = resolveServiceKey(currentSlug, currentLocale);
+  const currentServiceKey = resolveServiceKey(currentSlug, currentLocale) || "massage-spa";
 
   const { selectedCity, isHydrated } = useLocationStore();
   const [mounted, setMounted] = useState(false);

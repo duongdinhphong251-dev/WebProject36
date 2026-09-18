@@ -78,11 +78,6 @@ export function SpaListingCard({ spa, deals }: SpaListingCardProps) {
             <div className="flex items-center gap-1 mt-2">
               <MapPin className="h-3 w-3 text-[#414651]" />
               <span className="text-[10px] text-[#414651]">{spa.address}</span>
-              {spa.distance != null && spa.distance >= 0 && (
-                <span className="text-[10px] text-[#414651]">
-                  · {formatDistanceKm(spa.distance)}
-                </span>
-              )}
             </div>
           </div>
         </div>

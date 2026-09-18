@@ -24,9 +24,9 @@ export async function ServiceCategorySlider({ locale }: ServiceCategorySliderPro
           <ServiceCategoryMobileContainer locale={locale} />
         </div>
 
-        <div className="hidden md:grid md:grid-cols-2 md:gap-3 lg:grid-cols-4 lg:gap-4 w-full">
-          {MAIN_SERVICE_GROUPS.slice(0, 4).map((key, index) => (
-            <ServiceCategoryItem key={key} serviceKey={key} locale={locale} priority={index < 4} />
+        <div className="hidden md:grid md:grid-cols-3 md:gap-3 lg:grid-cols-5 lg:gap-4 w-full">
+          {MAIN_SERVICE_GROUPS.map((key, index) => (
+            <ServiceCategoryItem key={key} serviceKey={key} locale={locale} priority={index < 5} />
           ))}
         </div>
       </Container>

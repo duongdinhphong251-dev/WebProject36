@@ -45,9 +45,6 @@ export async function SpaCard({ spa, locale, photoName }: SpaCardProps) {
               <MapPin />
               <p className="text-sm text-[#0A0D12] line-clamp-2 leading-snug text-underline">
                 {address}
-                {spa.distanceKm != null && spa.distanceKm >= 0 && (
-                  <span className="ml-1 font-medium text-[#5B7A4F]">· {formatDistanceKm(spa.distanceKm)}</span>
-                )}
               </p>
             </div>
 

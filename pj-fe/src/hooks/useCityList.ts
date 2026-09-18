@@ -88,31 +88,10 @@ export function useCityList(customLocale?: LocaleTypes) {
   );
 
   const handleAutoDetect = useCallback(
-    (onSuccess?: (city: CityResponseDto) => void) => {
-      if (typeof navigator === "undefined" || !navigator.geolocation) return;
-      setIsDetecting(true);
-
-      navigator.geolocation.getCurrentPosition(
-        async (pos) => {
-          const lat = pos.coords.latitude;
-          const lng = pos.coords.longitude;
-          setCoords({ latitude: lat, longitude: lng });
-
-          const cityList = cities.length > 0 ? cities : await getCities();
-          const matched = mapCoordsToCity(lat, lng, cityList);
-          if (matched) {
-            setSelectedCity(matched, "auto");
-            onSuccess?.(matched);
-          }
-          setIsDetecting(false);
-        },
-        () => {
-          setIsDetecting(false);
-        },
-        { timeout: 10_000, maximumAge: 120_000 },
-      );
+    (_onSuccess?: (city: CityResponseDto) => void) => {
+      // Disabled geolocation auto-detect
     },
-    [cities, setCoords, setSelectedCity],
+    [],
   );
 
   // Labels theo ngôn ngữ

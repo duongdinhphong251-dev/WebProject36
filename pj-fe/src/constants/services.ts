@@ -61,15 +61,12 @@ export const SERVICE_SLUGS: Record<ServiceKey, Record<LocaleTypes, string>> = {
   },
 };
 
-// ─── Main 8 Service Groups (for homepage grid 2 rows × 4 columns) ────────────
+// ─── Main Service Groups (for homepage grid and group tabs) ────────────
 export const MAIN_SERVICE_GROUPS = [
   SERVICE_KEY.MASSAGE_SPA,
   SERVICE_KEY.BEAUTY_HAIR,
   SERVICE_KEY.FOOD_DRINK,
   SERVICE_KEY.TOURS,
-  SERVICE_KEY.TRANSPORT,
-  SERVICE_KEY.STAY,
-  SERVICE_KEY.HEALTH,
   SERVICE_KEY.ESSENTIALS,
 ] as const satisfies readonly ServiceKey[];
 
@@ -79,9 +76,6 @@ export const ALL_SERVICE_KEYS = [
   SERVICE_KEY.BEAUTY_HAIR,
   SERVICE_KEY.FOOD_DRINK,
   SERVICE_KEY.TOURS,
-  SERVICE_KEY.TRANSPORT,
-  SERVICE_KEY.STAY,
-  SERVICE_KEY.HEALTH,
   SERVICE_KEY.ESSENTIALS,
 ] as const satisfies readonly ServiceKey[];
 
@@ -108,6 +102,7 @@ export function resolveServiceKey(
   slug: string,
   locale: LocaleTypes,
 ): ServiceKey | undefined {
+  if (!slug) return undefined;
   return ALL_SERVICE_KEYS.find(
     (key) => {
       // 1. Check locales

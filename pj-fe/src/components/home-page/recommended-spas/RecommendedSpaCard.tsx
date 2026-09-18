@@ -81,11 +81,6 @@ export function RecommendedSpaCard({
                 · {spa.cityName}
               </span>
             )}
-            {spa.distanceKm != null && spa.distanceKm >= 0 && (
-              <span className="shrink-0 text-[10px] font-medium text-[#5B7A4F] md:text-xs">
-                · {formatDistanceKm(spa.distanceKm)}
-              </span>
-            )}
           </div>
         </div>
       </div>

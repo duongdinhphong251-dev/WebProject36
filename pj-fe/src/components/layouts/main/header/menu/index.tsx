@@ -4,13 +4,8 @@ import { Search } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useParams, usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
-import LocaleSwitcher from "@/components/common/locale-switcher";
-
 import LogoMain from "../Logo";
 import SearchBox from "../SearchBox";
-import { SavedSpasHeaderLink } from "../SavedSpasHeaderLink";
-import { CitySelector } from "../CitySelector";
-import { MobileLocationBar } from "@/components/home-page/MobileLocationBar";
 import { cn } from "@/libs/utils";
 
 export default function MainMenu() {
@@ -37,17 +32,9 @@ export default function MainMenu() {
             <SearchBox />
           </div>
 
-          <div className="hidden items-center justify-end gap-3 flex-1 md:flex">
-            <SavedSpasHeaderLink showLabel />
-            {!isDetailPage && <CitySelector />}
-            <LocaleSwitcher variant="pill-globe" />
-          </div>
+          <div className="hidden items-center justify-end gap-3 flex-1 md:flex" />
 
           <div className="flex items-center gap-2 md:hidden">
-            <SavedSpasHeaderLink
-              className="flex items-center justify-center h-10 w-10 p-0 rounded-xl bg-white/15 hover:bg-white/25 text-white transition-colors"
-              iconClassName="w-5 h-5"
-            />
             {!isHomePage && !isDetailPage && (
               <button
                 type="button"
@@ -58,14 +45,12 @@ export default function MainMenu() {
                 <Search className="h-5 w-5" strokeWidth={2} />
               </button>
             )}
-            <LocaleSwitcher variant="mobile-globe" />
           </div>
         </div>
 
         {isHomePage && (
           <div className="md:hidden pb-3.5 pt-0.5">
             <SearchBox />
-            <MobileLocationBar />
           </div>
         )}
       </div>

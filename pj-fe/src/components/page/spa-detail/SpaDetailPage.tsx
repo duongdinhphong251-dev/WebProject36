@@ -5,7 +5,7 @@ import dynamic from "next/dynamic";
 const MultiPlatformReviews = dynamic(
   () => import("./MultiPlatformReviews").then((mod) => mod.MultiPlatformReviews)
 );
-import { SpaMobileBottomBar } from "./SpaMobileBottomBar";
+
 import { SpaViewCount } from "@/components/page/spa-detail/SpaViewCount";
 import { SmartBackHistory } from "@/components/page/spa-detail/SmartBackHistory";
 import MapPin from "lucide-react/dist/esm/icons/map-pin";
@@ -27,9 +27,7 @@ const DealsForYouCard = dynamic(
 import type { SpaDetailDictionary } from "./DealCard";
 import { Star } from "lucide-react";
 
-const SpaSidebar = dynamic(
-  () => import("./SpaSidebar").then((mod) => mod.SpaSidebar)
-);
+
 import { getOpeningStatus } from "@/libs/opening-hours";
 import { formatDistanceKm } from "@/libs/distance-formatter";
 import { SpaDetailMobileHeader } from "./SpaDetailMobileHeader";
@@ -204,8 +202,7 @@ export function SpaDetailPage(props: SpaDetailPageProps) {
       {/* R-5: pb dynamic with safe-area instead of hardcoded pb-44 */}
       <main className="pb-[calc(env(safe-area-inset-bottom,0px)+140px)] lg:pb-12 mt-0 sm:mt-2">
         <Container maxWidth="2xl">
-          <div className="flex flex-col gap-3 lg:flex-row lg:items-start lg:gap-6">
-            <div className="min-w-0 flex-1 space-y-3">
+          <div className="w-full space-y-3">
 
               {/* ── Hero card with banner carousel (Mockup 1c) ── */}
               <section className="-mx-4 sm:mx-0 overflow-hidden rounded-none sm:rounded-[16px] bg-white shadow-[0_10px_40px_rgba(20,52,35,0.08)]">
@@ -414,64 +411,9 @@ export function SpaDetailPage(props: SpaDetailPageProps) {
                 googleMapsUri={spa.googlePlaceId ? `https://search.google.com/local/reviews?placeid=${spa.googlePlaceId}` : spa.googleMapsUri || null}
               />
 
-              {/* ── About (description) ── */}
-              {spa.description && (
-                <section className="rounded-[24px] bg-white p-4 shadow-[0_10px_40px_rgba(20,52,35,0.06)]">
-                  <SectionTitle>{dictionary.about || "Giới thiệu"}</SectionTitle>
-                  <p className="mt-3 text-sm leading-6 text-[#5B6B58] whitespace-pre-line">
-                    {spa.description}
-                  </p>
-                </section>
-              )}
-            </div>
-
-            <SpaSidebar
-              spaId={spa.slug || spa.id}
-              spaName={spa.name}
-              phone={spa.contact?.phone ?? null}
-              chatUrls={{
-                zaloUrl: (spa.contact as any)?.zaloUrl || (spa.contact as any)?.zalo || null,
-                facebookUrl: (spa.contact as any)?.facebookUrl || (spa.contact as any)?.messenger || (spa.contact as any)?.facebook || null,
-                telegramUrl: (spa.contact as any)?.telegramUrl || (spa.contact as any)?.telegram || null,
-                whatsappUrl: (spa.contact as any)?.whatsappUrl || (spa.contact as any)?.whatsapp || null,
-              }}
-              labels={{
-                call: dictionary.call,
-                chat: dictionary.scheduleConsultation,
-                report: dictionary.report,
-              }}
-              address={locationText}
-              lat={spa.location?.lat ?? null}
-              lng={spa.location?.lng ?? null}
-              openingHours={spa.openingHours}
-              dayLabels={dictionary.dayLabels}
-              closedLabel={dictionary.closed}
-              openHoursLabel={dictionary.openHours}
-              todayLabel={dictionary.today}
-              bestDeal={bestDeal}
-              dictionary={dictionary}
-            />
           </div>
         </Container>
       </main>
-
-      <div className="lg:hidden">
-        <SpaMobileBottomBar
-          spaName={spa.name}
-          phone={spa.contact?.phone ?? null}
-          chatUrls={{
-            zaloUrl: (spa.contact as any)?.zaloUrl || (spa.contact as any)?.zalo || null,
-            facebookUrl: (spa.contact as any)?.facebookUrl || (spa.contact as any)?.messenger || (spa.contact as any)?.facebook || null,
-            telegramUrl: (spa.contact as any)?.telegramUrl || (spa.contact as any)?.telegram || null,
-            whatsappUrl: (spa.contact as any)?.whatsappUrl || (spa.contact as any)?.whatsapp || null,
-          }}
-          mapsUrl={
-            spa.location?.lat != null && spa.location?.lng != null
-              ? `https://www.google.com/maps/dir/?api=1&destination=${spa.location?.lat},${spa.location?.lng}`
-              : null
-          }
-        />
-      </div>
     </div>
   );
 }
