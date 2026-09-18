@@ -1,7 +1,6 @@
 "use client";
 
-import { Navigation, Phone, Bookmark, Share2 } from "lucide-react";
-import { useSavedSpas } from "@/hooks/useSavedSpas";
+import { Navigation, Phone, Share2 } from "lucide-react";
 import { useState } from "react";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import Copy from "lucide-react/dist/esm/icons/copy";
@@ -11,7 +10,7 @@ import { cn } from "@/libs/utils";
 
 interface SpaQuickActionsProps {
   spaName: string;
-  spaId: string | number;
+  spaId?: string | number;
   phone?: string | null;
   mapsUrl?: string | null;
   shareUrl: string;
@@ -20,15 +19,12 @@ interface SpaQuickActionsProps {
 
 export function SpaQuickActions({
   spaName,
-  spaId,
+  spaId: _spaId,
   phone,
   mapsUrl,
   shareUrl,
   dictionary,
 }: SpaQuickActionsProps) {
-  const { isSaved, toggleSaveSpa } = useSavedSpas();
-  const saved = isSaved(spaId);
-
   const [shareOpen, setShareOpen] = useState(false);
   const [copied, setCopied] = useState(false);
 

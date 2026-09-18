@@ -2,15 +2,13 @@
 
 import { useRouter } from "next/navigation";
 import { ChevronLeft } from "lucide-react";
-import { SaveSpaButton } from "@/components/common/save-spa-button/SaveSpaButton";
-import LocaleSwitcher from "@/components/common/locale-switcher";
 
 interface SpaDetailMobileHeaderProps {
   name: string;
   categoryName?: string | null;
   districtName?: string | null;
   cityName?: string | null;
-  spaId: string | number;
+  spaId?: string | number;
 }
 
 export function SpaDetailMobileHeader({
@@ -18,7 +16,7 @@ export function SpaDetailMobileHeader({
   categoryName,
   districtName,
   cityName,
-  spaId,
+  spaId: _spaId,
 }: SpaDetailMobileHeaderProps) {
   const router = useRouter();
 
@@ -47,18 +45,6 @@ export function SpaDetailMobileHeader({
             {subline}
           </span>
         )}
-      </div>
-
-      {/* Save Button */}
-      <SaveSpaButton
-        spaId={spaId}
-        className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-white/15 hover:bg-white/25 text-white transition-colors p-0 shadow-none border-0"
-        iconClassName="size-4 text-white"
-      />
-
-      {/* Language Switcher */}
-      <div className="shrink-0">
-        <LocaleSwitcher variant="mobile-globe" />
       </div>
       </header>
       {/* Spacer to prevent content from hiding behind fixed header */}

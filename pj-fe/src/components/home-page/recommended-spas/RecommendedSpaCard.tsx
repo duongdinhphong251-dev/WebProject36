@@ -6,8 +6,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { SaveSpaButton } from "@/components/common/save-spa-button/SaveSpaButton";
 
-import { formatDistanceKm } from "@/libs/distance-formatter";
-
 export function RecommendedSpaCard({
   spa,
   locale,

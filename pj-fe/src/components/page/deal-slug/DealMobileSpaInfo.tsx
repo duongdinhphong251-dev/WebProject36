@@ -1,7 +1,6 @@
 import type { DealDetailDto } from "@/types/deal-detail";
 import { Eye, Navigation } from "lucide-react";
 import Link from "next/link";
-import { formatDistanceKm } from "@/libs/distance-formatter";
 import { getOpeningStatus } from "@/libs/opening-hours";
 import Image from "next/image";
 import { resolveSpaListingImageSrcWithFallback, shouldBypassNextImageOptimization } from "@/libs/spa-image-url";

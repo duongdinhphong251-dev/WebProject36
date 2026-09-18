@@ -4,7 +4,6 @@ import type { RecommendedSpaDto } from "@/types/api";
 import { resolveSpaListingImageSrcWithFallback, shouldBypassNextImageOptimization } from "@/libs/spa-image-url";
 import Image from "next/image";
 import Link from "next/link";
-import { formatDistanceKm } from "@/libs/distance-formatter";
 import { formatPrice } from "@/helpers/numbers";
 import { deriveDisplayDiscountPercent } from "@/libs/deal-discount-percent";
 

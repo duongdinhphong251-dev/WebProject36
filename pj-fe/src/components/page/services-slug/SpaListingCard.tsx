@@ -10,8 +10,6 @@ import useTranslate from "@/hooks/useTranslate";
 import CustomLink from "@/components/common/link";
 import { SaveSpaButton } from "@/components/common/save-spa-button/SaveSpaButton";
 
-import { formatDistanceKm } from "@/libs/distance-formatter";
-
 interface SpaListingCardProps {
   spa: Spa;
   deals: Deal[];

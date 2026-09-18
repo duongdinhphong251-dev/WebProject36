@@ -16,8 +16,6 @@ interface SpaCardProps {
 }
 
 
-import { formatDistanceKm } from "@/libs/distance-formatter";
-
 export async function SpaCard({ spa, locale, photoName }: SpaCardProps) {
   const { t } = await getTranslation(locale, "spa-detail");
   const address = spa.address;

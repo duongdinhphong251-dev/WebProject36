@@ -6,7 +6,6 @@ import { resolveSpaListingImageSrcWithFallback, shouldBypassNextImageOptimizatio
 import Image from "next/image";
 import Link from "next/link";
 import { SaveSpaButton } from "@/components/common/save-spa-button/SaveSpaButton";
-import { formatDistanceKm } from "@/libs/distance-formatter";
 import { formatPrice } from "@/helpers/numbers";
 import { deriveDisplayDiscountPercent } from "@/libs/deal-discount-percent";
 import { useTranslation } from "@/i18n/client";

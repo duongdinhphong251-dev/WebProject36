@@ -1,6 +1,5 @@
 import type { LocaleTypes } from "@/i18n/settings";
 import type { PagePayloadDto } from "@/types/api";
-import { Suspense } from "react";
 import { BreadcrumbsJsonLd } from "@/components/common/breadcrumbs/BreadcrumbsJsonLd";
 import { CollectionPageJsonLd } from "@/components/common/json-Ld/CollectionPageJsonLd";
 import { resolveLocalBusinessTypes } from "@/libs/seo/schema-builder";
@@ -10,7 +9,6 @@ import { PageHero } from "./PageHero";
 import { CategoryMobileHeader } from "./CategoryMobileHeader";
 import { GroupTabs } from "./GroupTabs";
 import { InfiniteSpaDealsListing } from "./InfiniteSpaDealsListing";
-import { UserGeoForHubDistance } from "./UserGeoForHubDistance";
 import { Container } from "@/components/ui/container";
 import { BackToTop } from "@/components/common/back-to-top/BackToTop";
 import { cityDisplayName, districtDisplayName } from "@/libs/parse-seo-service-path";
@@ -56,8 +54,6 @@ export async function PageTemplate({
     const parentId = filters.currentService.categoryId ?? filters.currentService.id;
     filters.subServices = filters.services.filter((s) => s.categoryId === parentId);
   }
-
-  const geoDistanceHub = pageType !== "not_found";
 
   const mainGroupKey = (() => {
     if (filters.currentService) {

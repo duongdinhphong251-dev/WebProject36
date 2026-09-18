@@ -4,7 +4,6 @@ import { useEffect, useMemo, useState, useCallback } from "react";
 import { useParams } from "next/navigation";
 import { useLocationStore } from "@/stores/location/useLocationStore";
 import { getCities } from "@/services/api/spa-api";
-import { mapCoordsToCity } from "@/libs/geo-city-mapper";
 import type { CityResponseDto } from "@/types/api";
 import type { LocaleTypes } from "@/i18n/settings";
 import { normalizeLocationSearchKey, localizeLocationName } from "@/libs/localize-location-name";
@@ -19,12 +18,11 @@ export function useCityList(customLocale?: LocaleTypes) {
 
   const selectedCity = useLocationStore((s) => s.selectedCity);
   const setSelectedCity = useLocationStore((s) => s.setSelectedCity);
-  const setCoords = useLocationStore((s) => s.setCoords);
 
   const [cities, setCities] = useState<CityResponseDto[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  const [isDetecting, setIsDetecting] = useState(false);
+  const isDetecting = false;
 
   // Fetch cities once on mount
   useEffect(() => {

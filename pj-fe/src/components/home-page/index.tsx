@@ -7,7 +7,6 @@ import {
   HeroBannerSkeleton,
 } from "./hero-banner/HeroBannerSlider";
 import { ServiceCategorySlider } from "./service-categories/ServiceCategorySlider";
-import { LocationObserver } from "./flash-sale/LocationObserver";
 import {
   HomeNearbySpasSection,
   HomeNearbySpasSectionSkeleton,
@@ -26,7 +25,6 @@ export default function HomePage({ locale }: { locale: string }) {
       <Suspense fallback={<HomeNearbySpasSectionSkeleton />}>
         <HomeNearbySpasSection locale={locale} />
       </Suspense>
-      <LocationObserver />
     </div>
   );
 }

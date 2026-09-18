@@ -15,7 +15,6 @@ import { Container } from "@/components/ui/container";
 import { deriveDisplayDiscountPercent } from "@/libs/deal-discount-percent";
 import { cn } from "@/libs/utils";
 
-import { SpaLocationMeta } from "./SpaLocationMeta";
 import { SpaBannerCarousel } from "./SpaBannerCarousel";
 import { OpeningHoursToggle } from "./OpeningHoursToggle";
 const SpaPricingTable = dynamic(
@@ -29,7 +28,6 @@ import { Star } from "lucide-react";
 
 
 import { getOpeningStatus } from "@/libs/opening-hours";
-import { formatDistanceKm } from "@/libs/distance-formatter";
 import { SpaDetailMobileHeader } from "./SpaDetailMobileHeader";
 import { SpaQuickActions } from "./SpaQuickActions";
 import { Env } from "@/libs/Env";
@@ -91,7 +89,6 @@ export function SpaDetailPage(props: SpaDetailPageProps) {
   const hasDeals = activeDeals.length > 0;
 
   let bestDealId: number | null = null;
-  let bestDeal: SpaDealDto | null = null;
   let sortedDeals: SpaDealDto[] = [];
 
   interface CategoryGroup {
@@ -126,7 +123,6 @@ export function SpaDetailPage(props: SpaDetailPageProps) {
     }
 
     bestDealId = maxDiscount > 0 && sortedDeals.length > 0 ? sortedDeals[0]?.id ?? null : null;
-    bestDeal = bestDealId ? sortedDeals[0] || null : null;
 
     const matchedDealIds = new Set<number>();
 
@@ -230,13 +226,6 @@ export function SpaDetailPage(props: SpaDetailPageProps) {
                       locale={locale}
                       label={dictionary.views}
                     />
-                    {/* Khoảng cách */}
-                    {spa.distanceKm != null && spa.distanceKm >= 0 && (
-                      <>
-                        <span className="text-[#9BA898]">·</span>
-                        <span>{formatDistanceKm(spa.distanceKm)}</span>
-                      </>
-                    )}
                     {/* Trạng thái mở cửa */}
                     {(() => {
                       const tOpening = (key: string, options?: { time?: string }) => {
@@ -373,10 +362,6 @@ export function SpaDetailPage(props: SpaDetailPageProps) {
                           {locationText}
                         </span>
                       )}
-                      <SpaLocationMeta
-                        lat={spa.location?.lat ?? null}
-                        lng={spa.location?.lng ?? null}
-                      />
                     </div>
                   </address>
                 </div>

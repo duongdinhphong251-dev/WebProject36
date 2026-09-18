@@ -3,7 +3,6 @@ import { DealSidebarCTA } from "./DealSidebarCTA";
 import { formatPrice } from "@/helpers/numbers";
 import { deriveDisplayDiscountPercent } from "@/libs/deal-discount-percent";
 import { Eye } from "lucide-react";
-import { formatDistanceKm } from "@/libs/distance-formatter";
 import { getOpeningStatus } from "@/libs/opening-hours";
 import Image from "next/image";
 import { resolveSpaListingImageSrcWithFallback, shouldBypassNextImageOptimization } from "@/libs/spa-image-url";
