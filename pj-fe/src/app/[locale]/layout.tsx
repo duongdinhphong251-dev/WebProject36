@@ -1,26 +1,11 @@
-import { notFound } from 'next/navigation';
-import { locales } from '@/i18n/settings';
-import { routing } from '@/libs/I18nRouting';
+import { notFound, redirect } from 'next/navigation';
+import { api, type City, type User } from '@/lib/api';
+import { Header } from '@/components/Header';
 
-export function generateStaticParams() {
-  return routing.locales.map(locale => ({ locale }));
-}
-
-import { LanguageSync } from '@/components/common/locale-switcher/LanguageSync';
-
-export default async function RootLayout(props: {
-  children: React.ReactNode;
-  params: Promise<{ locale: string }>;
-}) {
-  const { locale } = await props.params;
-
-  if (!locales.includes(locale as any)) {
-    notFound();
-  }
-
-  return (
-    <LanguageSync>
-      {props.children}
-    </LanguageSync>
-  );
+export default async function LocaleLayout({ children, params }: { children: React.ReactNode; params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
+  if (!['vi', 'en'].includes(locale)) notFound();
+  const [user, cities] = await Promise.all([api<User>('auth/me'), api<City[]>('catalog/cities')]);
+  if (user.role === 'admin') redirect('/admin');
+  return <><Header locale={locale} user={user} cities={cities} /><main className="container">{children}</main></>;
 }

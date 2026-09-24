@@ -27,5 +27,6 @@
     },
     "strictBindCallApply": false,
     "noFallthroughCasesInSwitch": false
-  }
+  },
+  "include": ["src/**/*.ts", "scripts/**/*.ts"]
 }

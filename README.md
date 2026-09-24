@@ -1,83 +1,50 @@
-﻿# Nhom36 - Spa and Deal Search Web
+# Nhom36 Spa & Voucher
 
-A web project that lets users search for spa vouchers by location. Supports Vietnamese and English.
+Dự án môn học gồm Next.js 16/React 19/Tailwind 4 và NestJS 11/Drizzle/PostgreSQL 16. Người dùng đăng nhập trước khi xem spa, voucher. Giao diện hỗ trợ tiếng Việt và tiếng Anh; giá chỉ hiển thị VND.
 
-## Tech Stack
+## Chạy trên máy
 
-| Layer | Technology |
-|---|---|
-| Frontend | Next.js 16, React 19, TypeScript, Tailwind CSS |
-| Backend | NestJS 11, Drizzle ORM, TypeScript |
-| Database | PostgreSQL 16 |
-| Runtime | Node.js >= 20 |
+Yêu cầu Node.js 20+ và PostgreSQL 16 (Docker có thể mở cổng 5433). Chạy trong PowerShell ở thư mục gốc:
 
-## Project Structure
-
-```
-Project/
-|-- pj-be/                  # Backend - NestJS + Drizzle
-|   |-- src/                # Source code
-|   |   |-- modules/        # Business modules
-|   |   |-- db/             # Schema + DB connection
-|   |   \-- common/         # Shared utilities
-|   |-- drizzle/            # Migration files
-|   |-- seed-demo.sql       # Sample data
-|   |-- seed-locations.sql  # Sample data
-|   \-- .env.example        # Config template
-|-- pj-fe/                  # Frontend - Next.js
-|   |-- src/
-|   |   |-- app/            # Routes
-|   |   |-- components/     # UI components
-|   |   |-- services/       # Backend API calls
-|   |   \-- i18n/           # Multi-language
-|   |-- public/             # Images, assets
-|   \-- .env.exemple        # Config template
-|-- HUONG-DAN-CHAY.md       # Setup instructions
-\-- README.md               # This file
+```powershell
+docker run --name pj-postgres -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=tuoi_db -p 5433:5432 -d postgres:16
+cd pj-be
+Copy-Item .env.example .env
+npm ci
+npm run db:migrate
+npm run start:dev
 ```
 
-## Features
+Trong terminal khác:
 
-- Homepage: ad banners, 4 main service categories, recommended spas
-- Search spas by region: filter by city, price, rating
-- Spa detail: information, images, reviews
-- Deals and promotions: display currently running offers
-- Multi-language: Vietnamese, English
-
-## Workflow
-
-```
-User
-  |
-  v
-Frontend (Next.js)     <- port 3000
-  |
-  | HTTP API call
-  v
-Backend (NestJS)       <- port 8081
-  |
-  | SQL query
-  v
-Database (PostgreSQL)  <- port 5433
+```powershell
+cd pj-fe
+Copy-Item .env.example .env.local
+npm ci
+npm run dev
 ```
 
-**In simple terms:**
+Mở `http://localhost:3000`. Nếu container `pj-postgres` đã tồn tại, dùng `docker start pj-postgres` thay cho `docker run`. Đổi `JWT_SECRET` trong `pj-be/.env` trước khi dùng ngoài máy cá nhân. Lệnh `db:migrate` có thể chạy lại; nó giữ dữ liệu cũ và tạo ba tài khoản demo. Với database trống, lệnh này tạo thêm ba thành phố, spa và voucher mẫu.
 
-- Frontend displays the UI to users.
-- Backend handles logic and fetches data from the database.
-- Database stores all information.
-- Frontend calls Backend over HTTP, Backend reads Database and returns the result.
+## Demo theo vai trò
 
-## Example Flow
+| Vai trò | Số điện thoại | Mật khẩu | Trang |
+|---|---|---|---|
+| User | `0900000003` | `User@123456` | `/me` |
+| Chủ spa | `0900000002` | `Owner@123456` | `/owner` |
+| Admin | `0900000001` | `Admin@123456` | `/admin` |
 
-User opens /massage-spa/ha-noi:
+User xem danh sách `/vi` hoặc `/en`, lọc `?city=ha-noi`, lưu spa, viết đánh giá và đặt lịch. Chủ spa tạo/sửa spa, tạo/sửa/xóa voucher, xem booking và thống kê. Spa/voucher mới chỉ xuất hiện công khai sau khi admin duyệt. Admin xem toàn bộ dữ liệu và khóa/mở khóa tài khoản. Đăng ký người dùng ở `/register`, chủ spa ở `/register/owner`. Swagger: `http://localhost:8081/api/docs`.
 
-1. Frontend receives the URL and calls the Backend API.
-2. Backend looks up the city_id for Hanoi.
-3. Backend fetches massage deals in Hanoi.
-4. Backend returns JSON to Frontend.
-5. Frontend renders the spa and deal list.
+## Kiểm tra
 
-## Notes
+```powershell
+cd pj-be
+npx tsc --noEmit
+npm test -- --runInBand
+npm run build
+npm run lint
+npm run test:smoke   # cần backend và PostgreSQL đang chạy; tự dọn dữ liệu thử
+```
 
-- For setup and run instructions, see Nhom36.md.
+Với frontend, chạy `npx tsc --noEmit`, `npm run lint`, `npm run build` trong `pj-fe/`. Xem [PROJECT_STRUCTURE.md](PROJECT_STRUCTURE.md) để hiểu cây thư mục và luồng request. Các file `.env` không được commit.
