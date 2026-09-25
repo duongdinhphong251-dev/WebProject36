@@ -45,3 +45,4 @@ coverage
 *.swp
 *.swo
 docker-compose.yml
+.test-dist/

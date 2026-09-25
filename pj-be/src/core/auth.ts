@@ -47,6 +47,7 @@ export class RegisterDto {
   @ApiProperty({ example: 'Nguyen Van A' })
   @IsString()
   @IsNotEmpty()
+  @Matches(/\S/, { message: 'fullName must not be blank' })
   fullName!: string;
 }
 
@@ -158,12 +159,8 @@ export class JwtAuthGuard implements CanActivate {
         !('role' in payload)
       )
         throw new Error('Invalid token');
-      const identity = {
-        userId: String(payload.userId),
-        role: String(payload.role) as Role,
-      };
-      await this.auth.me(identity.userId);
-      request.identity = identity;
+      const user = await this.auth.me(String(payload.userId));
+      request.identity = { userId: user.id, role: user.role as Role };
     } catch {
       throw new UnauthorizedException();
     }

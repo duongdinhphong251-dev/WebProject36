@@ -12,16 +12,24 @@ import {
   ApiQuery,
   ApiTags,
 } from '@nestjs/swagger';
-import { IsOptional, IsString } from 'class-validator';
+import { IsOptional, IsString, Matches } from 'class-validator';
 import { and, eq, desc, lt } from 'drizzle-orm';
 import { DbService } from './db';
 import { cities, deals, reviews, spas, users } from './schema';
+import { POSTGRES_UUID, PositiveIntPipe, UuidPipe } from './ids';
 
 export class CityQueryDto {
   @ApiPropertyOptional({ example: 'ha-noi' })
   @IsOptional()
   @IsString()
   city?: string;
+}
+
+export class DealQueryDto extends CityQueryDto {
+  @ApiPropertyOptional()
+  @IsOptional()
+  @Matches(POSTGRES_UUID)
+  spaId?: string;
 }
 
 @ApiTags('catalog')
@@ -72,7 +80,7 @@ export class CatalogController {
 
   @Get('spas/:id')
   @ApiOperation({ summary: 'Get an approved spa and its reviews' })
-  async spa(@Param('id') id: string) {
+  async spa(@Param('id', UuidPipe) id: string) {
     const row = await this.db.client
       .select({
         id: spas.id,
@@ -107,7 +115,8 @@ export class CatalogController {
   @Get('deals')
   @ApiOperation({ summary: 'List approved vouchers, optionally by city' })
   @ApiQuery({ name: 'city', required: false })
-  async deals(@Query() query: CityQueryDto) {
+  @ApiQuery({ name: 'spaId', required: false })
+  async deals(@Query() query: DealQueryDto) {
     await this.expireDeals();
     return this.db.client
       .select({
@@ -130,6 +139,7 @@ export class CatalogController {
           eq(deals.approvalStatus, 'approved'),
           eq(spas.approvalStatus, 'approved'),
           query.city ? eq(cities.slug, query.city) : undefined,
+          query.spaId ? eq(spas.id, query.spaId) : undefined,
         ),
       )
       .orderBy(desc(deals.createdAt));
@@ -137,7 +147,7 @@ export class CatalogController {
 
   @Get('deals/:id')
   @ApiOperation({ summary: 'Get an approved voucher' })
-  async deal(@Param('id') id: string) {
+  async deal(@Param('id', PositiveIntPipe) id: number) {
     await this.expireDeals();
     const row = await this.db.client
       .select({
@@ -155,7 +165,7 @@ export class CatalogController {
       .innerJoin(spas, eq(deals.spaId, spas.id))
       .where(
         and(
-          eq(deals.id, Number(id)),
+          eq(deals.id, id),
           eq(deals.approvalStatus, 'approved'),
           eq(spas.approvalStatus, 'approved'),
         ),

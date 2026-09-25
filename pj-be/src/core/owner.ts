@@ -9,14 +9,19 @@ import {
   Patch,
   Post,
   Req,
+  UploadedFile,
+  UseInterceptors,
 } from '@nestjs/common';
 import {
   ApiBearerAuth,
   ApiBody,
+  ApiConsumes,
   ApiOperation,
   ApiProperty,
   ApiPropertyOptional,
   ApiTags,
+  OmitType,
+  PartialType,
 } from '@nestjs/swagger';
 import {
   IsDateString,
@@ -24,69 +29,61 @@ import {
   IsOptional,
   IsString,
   IsUrl,
-  IsUUID,
+  Matches,
   Min,
 } from 'class-validator';
 import { randomUUID } from 'node:crypto';
+import { mkdir, writeFile } from 'node:fs/promises';
+import { resolve } from 'node:path';
+import { FileInterceptor } from '@nestjs/platform-express';
 import { and, count, eq, inArray } from 'drizzle-orm';
 import { Roles } from './auth';
 import type { AuthRequest } from './auth';
 import { DbService } from './db';
 import { bookings, cities, deals, spas, users } from './schema';
+import { POSTGRES_UUID, PositiveIntPipe, UuidPipe } from './ids';
 
 export class SpaDto {
   @ApiProperty()
   @IsString()
+  @Matches(/\S/, { message: 'name must not be blank' })
   name!: string;
   @ApiProperty()
   @IsString()
+  @Matches(/\S/, { message: 'address must not be blank' })
   address!: string;
   @ApiProperty()
   @IsString()
+  @Matches(/\S/, { message: 'description must not be blank' })
   description!: string;
   @ApiProperty()
   @IsString()
+  @Matches(/\S/, { message: 'phone must not be blank' })
   phone!: string;
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ type: String, nullable: true })
   @IsOptional()
   @IsUrl()
-  zalo?: string;
+  zalo?: string | null;
   @ApiProperty()
   @IsInt()
+  @Min(1)
   cityId!: number;
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsString()
+  image?: string;
 }
-export class EditSpaDto {
-  @ApiPropertyOptional()
-  @IsOptional()
-  @IsString()
-  name?: string;
-  @ApiPropertyOptional()
-  @IsOptional()
-  @IsString()
-  address?: string;
-  @ApiPropertyOptional()
-  @IsOptional()
-  @IsString()
-  description?: string;
-  @ApiPropertyOptional()
-  @IsOptional()
-  @IsString()
-  phone?: string;
-  @ApiPropertyOptional()
-  @IsOptional()
-  @IsUrl()
-  zalo?: string;
-  @ApiPropertyOptional()
-  @IsOptional()
-  @IsInt()
-  cityId?: number;
-}
+// PATCH reuses create rules, but allows omitted fields. Null only clears optional fields.
+export class EditSpaDto extends PartialType(SpaDto, {
+  skipNullProperties: false,
+}) {}
 export class DealDto {
   @ApiProperty()
-  @IsUUID()
+  @Matches(POSTGRES_UUID, { message: 'spaId must be a UUID' })
   spaId!: string;
   @ApiProperty()
   @IsString()
+  @Matches(/\S/, { message: 'titleVi must not be blank' })
   titleVi!: string;
   @ApiPropertyOptional()
   @IsOptional()
@@ -94,6 +91,7 @@ export class DealDto {
   titleEn?: string;
   @ApiProperty()
   @IsString()
+  @Matches(/\S/, { message: 'description must not be blank' })
   description!: string;
   @ApiProperty({ minimum: 0 })
   @IsInt()
@@ -103,38 +101,15 @@ export class DealDto {
   @IsOptional()
   @IsString()
   image?: string;
-  @ApiPropertyOptional({ format: 'date-time' })
+  @ApiPropertyOptional({ type: String, format: 'date-time', nullable: true })
   @IsOptional()
   @IsDateString()
-  endAt?: string;
+  endAt?: string | null;
 }
-export class EditDealDto {
-  @ApiPropertyOptional()
-  @IsOptional()
-  @IsString()
-  titleVi?: string;
-  @ApiPropertyOptional()
-  @IsOptional()
-  @IsString()
-  titleEn?: string;
-  @ApiPropertyOptional()
-  @IsOptional()
-  @IsString()
-  description?: string;
-  @ApiPropertyOptional({ minimum: 0 })
-  @IsOptional()
-  @IsInt()
-  @Min(0)
-  priceVnd?: number;
-  @ApiPropertyOptional()
-  @IsOptional()
-  @IsString()
-  image?: string;
-  @ApiPropertyOptional({ format: 'date-time' })
-  @IsOptional()
-  @IsDateString()
-  endAt?: string;
-}
+export class EditDealDto extends PartialType(
+  OmitType(DealDto, ['spaId'] as const),
+  { skipNullProperties: false },
+) {}
 
 @ApiTags('owner')
 @ApiBearerAuth()
@@ -142,6 +117,47 @@ export class EditDealDto {
 @Controller('owner')
 export class OwnerController {
   constructor(private readonly db: DbService) {}
+
+  @Post('images')
+  @ApiOperation({ summary: 'Upload one spa or voucher cover image' })
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: { file: { type: 'string', format: 'binary' } },
+    },
+  })
+  @UseInterceptors(
+    FileInterceptor('file', { limits: { fileSize: 2 * 1024 * 1024 } }),
+  )
+  async uploadImage(
+    @UploadedFile() file?: { buffer: Buffer; mimetype: string },
+  ) {
+    if (!file?.buffer) throw new BadRequestException('Choose an image');
+    const bytes = file.buffer;
+    const png = bytes
+      .subarray(0, 8)
+      .equals(Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]));
+    const jpg = bytes.subarray(0, 3).equals(Buffer.from([255, 216, 255]));
+    const webp =
+      bytes.toString('ascii', 0, 4) === 'RIFF' &&
+      bytes.toString('ascii', 8, 12) === 'WEBP';
+    const extension = png ? 'png' : jpg ? 'jpg' : webp ? 'webp' : null;
+    const expectedMime = png
+      ? 'image/png'
+      : jpg
+        ? 'image/jpeg'
+        : webp
+          ? 'image/webp'
+          : null;
+    if (!extension || file.mimetype !== expectedMime)
+      throw new BadRequestException('Use a PNG, JPEG or WebP image');
+    const filename = `${randomUUID()}.${extension}`;
+    const directory = resolve(process.cwd(), 'uploads');
+    await mkdir(directory, { recursive: true });
+    await writeFile(resolve(directory, filename), bytes);
+    return { image: `/uploads/${filename}` };
+  }
 
   private async ownSpa(ownerId: string, spaId: string) {
     const row = await this.db.client
@@ -175,21 +191,26 @@ export class OwnerController {
         zalo: spas.messagingLinkZalo,
         cityId: spas.cityId,
         approvalStatus: spas.approvalStatus,
+        image: spas.spaAvatar,
       })
       .from(spas)
       .where(eq(spas.ownerId, req.identity.userId));
+  }
+
+  private async validCity(cityId: number) {
+    const city = await this.db.client
+      .select({ id: cities.id })
+      .from(cities)
+      .where(eq(cities.id, cityId))
+      .limit(1);
+    if (!city[0]) throw new BadRequestException('City not found');
   }
 
   @Post('spas')
   @ApiOperation({ summary: 'Create spa for admin approval' })
   @ApiBody({ type: SpaDto })
   async createSpa(@Req() req: AuthRequest, @Body() input: SpaDto) {
-    const city = await this.db.client
-      .select({ id: cities.id })
-      .from(cities)
-      .where(eq(cities.id, input.cityId))
-      .limit(1);
-    if (!city[0]) throw new BadRequestException('City not found');
+    await this.validCity(input.cityId);
     const id = randomUUID();
     await this.db.client.insert(spas).values({
       id,
@@ -204,6 +225,7 @@ export class OwnerController {
       description: input.description,
       phone: input.phone,
       messagingLinkZalo: input.zalo,
+      spaAvatar: input.image,
       cityId: input.cityId,
       approvalStatus: 'pending',
     });
@@ -215,21 +237,21 @@ export class OwnerController {
   @ApiBody({ type: EditSpaDto })
   async editSpa(
     @Req() req: AuthRequest,
-    @Param('id') id: string,
+    @Param('id', UuidPipe) id: string,
     @Body() input: EditSpaDto,
   ) {
     await this.ownSpa(req.identity.userId, id);
+    if (input.cityId !== undefined) await this.validCity(input.cityId);
     await this.db.client
       .update(spas)
       .set({
-        ...(input.name !== undefined && { name: input.name }),
-        ...(input.address !== undefined && { address: input.address }),
-        ...(input.description !== undefined && {
-          description: input.description,
-        }),
-        ...(input.phone !== undefined && { phone: input.phone }),
-        ...(input.zalo !== undefined && { messagingLinkZalo: input.zalo }),
-        ...(input.cityId !== undefined && { cityId: input.cityId }),
+        name: input.name,
+        address: input.address,
+        description: input.description,
+        phone: input.phone,
+        messagingLinkZalo: input.zalo,
+        cityId: input.cityId,
+        spaAvatar: input.image,
         approvalStatus: 'pending',
       })
       .where(eq(spas.id, id));
@@ -250,6 +272,7 @@ export class OwnerController {
         priceVnd: deals.priceVnd,
         endAt: deals.endAt,
         approvalStatus: deals.approvalStatus,
+        image: deals.coverImageUrl,
       })
       .from(deals)
       .innerJoin(spas, eq(deals.spaId, spas.id))
@@ -282,32 +305,43 @@ export class OwnerController {
   @ApiBody({ type: EditDealDto })
   async editDeal(
     @Req() req: AuthRequest,
-    @Param('id') id: string,
+    @Param('id', PositiveIntPipe) id: number,
     @Body() input: EditDealDto,
   ) {
-    await this.ownDeal(req.identity.userId, Number(id));
+    await this.ownDeal(req.identity.userId, id);
     await this.db.client
       .update(deals)
       .set({
-        ...(input.titleVi !== undefined && { titleVi: input.titleVi }),
-        ...(input.titleEn !== undefined && { titleEn: input.titleEn }),
-        ...(input.description !== undefined && {
-          shortDescriptionVi: input.description,
-        }),
-        ...(input.priceVnd !== undefined && { priceVnd: input.priceVnd }),
-        ...(input.image !== undefined && { coverImageUrl: input.image }),
-        ...(input.endAt !== undefined && { endAt: new Date(input.endAt) }),
+        titleVi: input.titleVi,
+        titleEn: input.titleEn,
+        shortDescriptionVi: input.description,
+        priceVnd: input.priceVnd,
+        coverImageUrl: input.image,
+        // undefined keeps the old value; null explicitly clears the expiry.
+        endAt: input.endAt == null ? input.endAt : new Date(input.endAt),
         approvalStatus: 'pending',
       })
-      .where(eq(deals.id, Number(id)));
-    return { id: Number(id), approvalStatus: 'pending' };
+      .where(eq(deals.id, id));
+    return { id: id, approvalStatus: 'pending' };
   }
 
   @Delete('deals/:id')
   @ApiOperation({ summary: 'Delete my voucher' })
-  async deleteDeal(@Req() req: AuthRequest, @Param('id') id: string) {
-    await this.ownDeal(req.identity.userId, Number(id));
-    await this.db.client.delete(deals).where(eq(deals.id, Number(id)));
+  async deleteDeal(
+    @Req() req: AuthRequest,
+    @Param('id', PositiveIntPipe) id: number,
+  ) {
+    await this.ownDeal(req.identity.userId, id);
+    const linkedBooking = await this.db.client
+      .select({ id: bookings.id })
+      .from(bookings)
+      .where(eq(bookings.dealId, id))
+      .limit(1);
+    if (linkedBooking.length)
+      throw new BadRequestException(
+        'Voucher has bookings and cannot be deleted',
+      );
+    await this.db.client.delete(deals).where(eq(deals.id, id));
     return { deleted: true };
   }
 
@@ -321,11 +355,13 @@ export class OwnerController {
         userName: users.fullName,
         userPhone: users.phone,
         status: bookings.status,
+        dealTitle: deals.titleVi,
         scheduledAt: bookings.scheduledAt,
       })
       .from(bookings)
       .innerJoin(spas, eq(bookings.spaId, spas.id))
       .innerJoin(users, eq(bookings.userId, users.id))
+      .leftJoin(deals, eq(bookings.dealId, deals.id))
       .where(eq(spas.ownerId, req.identity.userId));
   }
 

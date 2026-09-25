@@ -64,3 +64,5 @@ build-archive.log
 .playwright-mcp/
 /tasks
 .agents
+
+.test-dist/

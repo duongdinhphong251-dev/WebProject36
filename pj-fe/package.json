@@ -2,19 +2,20 @@
   "name": "nhom36-frontend",
   "private": true,
   "version": "1.0.0",
-  "engines": { "node": ">=20" },
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "dev": "next dev --webpack",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint . --max-warnings=0"
+    "lint": "eslint . --max-warnings=0",
+    "test": "tsc -p tsconfig.test.json && node --test .test-dist/tests/helpers.test.js"
   },
   "dependencies": {
-    "@tanstack/react-query": "^5.90.21",
     "next": "16.2.3",
     "react": "19.2.4",
-    "react-dom": "19.2.4",
-    "zustand": "5.0.11"
+    "react-dom": "19.2.4"
   },
   "devDependencies": {
     "@eslint/js": "^9.18.0",

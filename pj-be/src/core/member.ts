@@ -20,22 +20,30 @@ import {
 import {
   IsDateString,
   IsInt,
-  IsOptional,
   IsString,
-  IsUUID,
+  Matches,
   Max,
   Min,
+  ValidateIf,
 } from 'class-validator';
 import { randomUUID } from 'node:crypto';
-import { and, desc, eq } from 'drizzle-orm';
+import { and, desc, eq, gt, isNull, or } from 'drizzle-orm';
 import { Roles } from './auth';
 import type { AuthRequest } from './auth';
 import { DbService } from './db';
-import { bookings, deals, reviews, savedSpas, spas } from './schema';
+import {
+  bookings,
+  claimedVouchers,
+  deals,
+  reviews,
+  savedSpas,
+  spas,
+} from './schema';
+import { POSTGRES_UUID, PositiveIntPipe, UuidPipe } from './ids';
 
 export class ReviewDto {
   @ApiProperty()
-  @IsUUID()
+  @Matches(POSTGRES_UUID, { message: 'spaId must be a UUID' })
   spaId!: string;
   @ApiProperty({ minimum: 1, maximum: 5 })
   @IsInt()
@@ -44,15 +52,17 @@ export class ReviewDto {
   rating!: number;
   @ApiProperty()
   @IsString()
+  @Matches(/\S/, { message: 'comment must not be blank' })
   comment!: string;
 }
 export class BookingDto {
   @ApiProperty()
-  @IsUUID()
+  @Matches(POSTGRES_UUID, { message: 'spaId must be a UUID' })
   spaId!: string;
   @ApiPropertyOptional()
-  @IsOptional()
+  @ValidateIf((_object, value: unknown) => value !== undefined)
   @IsInt()
+  @Min(1)
   dealId?: number;
   @ApiProperty({ format: 'date-time' })
   @IsDateString()
@@ -97,7 +107,7 @@ export class MemberController {
 
   @Post('saved/:spaId')
   @ApiOperation({ summary: 'Save a spa' })
-  async save(@Req() req: AuthRequest, @Param('spaId') spaId: string) {
+  async save(@Req() req: AuthRequest, @Param('spaId', UuidPipe) spaId: string) {
     await this.approvedSpa(spaId);
     await this.db.client
       .insert(savedSpas)
@@ -108,7 +118,10 @@ export class MemberController {
 
   @Delete('saved/:spaId')
   @ApiOperation({ summary: 'Remove a saved spa' })
-  async unsave(@Req() req: AuthRequest, @Param('spaId') spaId: string) {
+  async unsave(
+    @Req() req: AuthRequest,
+    @Param('spaId', UuidPipe) spaId: string,
+  ) {
     await this.db.client
       .delete(savedSpas)
       .where(
@@ -143,26 +156,21 @@ export class MemberController {
   @ApiBody({ type: ReviewDto })
   async review(@Req() req: AuthRequest, @Body() input: ReviewDto) {
     await this.approvedSpa(input.spaId);
-    const previous = await this.db.client
-      .select({ id: reviews.id })
-      .from(reviews)
-      .where(
-        and(
-          eq(reviews.userId, req.identity.userId),
-          eq(reviews.spaId, input.spaId),
-        ),
-      )
-      .limit(1);
-    if (previous.length)
-      throw new BadRequestException('You already reviewed this spa');
     const id = randomUUID();
-    await this.db.client.insert(reviews).values({
-      id,
-      userId: req.identity.userId,
-      spaId: input.spaId,
-      rating: input.rating,
-      comment: input.comment.trim(),
-    });
+    // The unique constraint also prevents duplicate concurrent requests.
+    const inserted = await this.db.client
+      .insert(reviews)
+      .values({
+        id,
+        userId: req.identity.userId,
+        spaId: input.spaId,
+        rating: input.rating,
+        comment: input.comment.trim(),
+      })
+      .onConflictDoNothing()
+      .returning({ id: reviews.id });
+    if (!inserted.length)
+      throw new BadRequestException('You already reviewed this spa');
     return { id };
   }
 
@@ -175,11 +183,13 @@ export class MemberController {
         spaId: bookings.spaId,
         spaName: spas.name,
         dealId: bookings.dealId,
+        dealTitle: deals.titleVi,
         status: bookings.status,
         scheduledAt: bookings.scheduledAt,
       })
       .from(bookings)
       .innerJoin(spas, eq(bookings.spaId, spas.id))
+      .leftJoin(deals, eq(bookings.dealId, deals.id))
       .where(eq(bookings.userId, req.identity.userId))
       .orderBy(desc(bookings.scheduledAt));
   }
@@ -191,7 +201,7 @@ export class MemberController {
     await this.approvedSpa(input.spaId);
     if (new Date(input.scheduledAt) <= new Date())
       throw new BadRequestException('Choose a future time');
-    if (input.dealId) {
+    if (input.dealId !== undefined) {
       const voucher = await this.db.client
         .select({ id: deals.id })
         .from(deals)
@@ -200,19 +210,93 @@ export class MemberController {
             eq(deals.id, input.dealId),
             eq(deals.spaId, input.spaId),
             eq(deals.approvalStatus, 'approved'),
+            or(isNull(deals.endAt), gt(deals.endAt, new Date())),
           ),
         )
         .limit(1);
       if (!voucher[0]) throw new BadRequestException('Voucher is unavailable');
     }
     const id = randomUUID();
-    await this.db.client.insert(bookings).values({
-      id,
-      userId: req.identity.userId,
-      spaId: input.spaId,
-      dealId: input.dealId,
-      scheduledAt: new Date(input.scheduledAt),
+    // Consuming the voucher and creating the booking must succeed together.
+    await this.db.client.transaction(async (tx) => {
+      if (input.dealId !== undefined) {
+        const used = await tx
+          .update(claimedVouchers)
+          .set({ status: 'used', usedAt: new Date() })
+          .where(
+            and(
+              eq(claimedVouchers.userId, req.identity.userId),
+              eq(claimedVouchers.dealId, input.dealId),
+              eq(claimedVouchers.status, 'available'),
+            ),
+          )
+          .returning({ dealId: claimedVouchers.dealId });
+        if (!used.length)
+          throw new BadRequestException(
+            'Claim this voucher before booking, or it has already been used',
+          );
+      }
+      await tx.insert(bookings).values({
+        id,
+        userId: req.identity.userId,
+        spaId: input.spaId,
+        dealId: input.dealId,
+        scheduledAt: new Date(input.scheduledAt),
+      });
     });
     return { id, status: 'pending' };
+  }
+
+  @Get('vouchers')
+  @ApiOperation({ summary: 'List my claimed vouchers' })
+  vouchers(@Req() req: AuthRequest) {
+    return this.db.client
+      .select({
+        dealId: claimedVouchers.dealId,
+        spaId: deals.spaId,
+        spaName: spas.name,
+        titleVi: deals.titleVi,
+        titleEn: deals.titleEn,
+        status: claimedVouchers.status,
+        endAt: deals.endAt,
+        approvalStatus: deals.approvalStatus,
+        spaApprovalStatus: spas.approvalStatus,
+      })
+      .from(claimedVouchers)
+      .innerJoin(deals, eq(claimedVouchers.dealId, deals.id))
+      .innerJoin(spas, eq(deals.spaId, spas.id))
+      .where(eq(claimedVouchers.userId, req.identity.userId))
+      .orderBy(desc(claimedVouchers.claimedAt));
+  }
+
+  @Post('vouchers/:dealId')
+  @ApiOperation({ summary: 'Claim an approved voucher once' })
+  async claimVoucher(
+    @Req() req: AuthRequest,
+    @Param('dealId', PositiveIntPipe) dealId: number,
+  ) {
+    const available = await this.db.client
+      .select({ id: deals.id })
+      .from(deals)
+      .innerJoin(spas, eq(deals.spaId, spas.id))
+      .where(
+        and(
+          eq(deals.id, dealId),
+          eq(deals.approvalStatus, 'approved'),
+          eq(spas.approvalStatus, 'approved'),
+          or(isNull(deals.endAt), gt(deals.endAt, new Date())),
+        ),
+      )
+      .limit(1);
+    if (!available.length)
+      throw new BadRequestException('Voucher is unavailable');
+    const claimed = await this.db.client
+      .insert(claimedVouchers)
+      .values({ userId: req.identity.userId, dealId })
+      .onConflictDoNothing()
+      .returning({ dealId: claimedVouchers.dealId });
+    if (!claimed.length)
+      throw new BadRequestException('You already claimed this voucher');
+    return { dealId, status: 'available' };
   }
 }

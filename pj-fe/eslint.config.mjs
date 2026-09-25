@@ -35,6 +35,7 @@ export default [
   {
     ignores: [
       '.next/**',
+      '.test-dist/**',
       'node_modules/**',
       'migrations/**',
       '**/*.md',

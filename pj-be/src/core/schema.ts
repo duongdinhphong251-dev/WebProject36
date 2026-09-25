@@ -3,9 +3,11 @@ import {
   bigserial,
   integer,
   pgTable,
+  primaryKey,
   text,
   timestamp,
   uuid,
+  unique,
   varchar,
 } from 'drizzle-orm/pg-core';
 
@@ -40,8 +42,8 @@ export const spas = pgTable('spas', {
   description: text('description'),
   messagingLinkZalo: text('messaging_link_zalo'),
   spaAvatar: text('spa_avatar'),
-  ownerId: uuid('owner_id'),
-  cityId: bigint('city_id', { mode: 'number' }),
+  ownerId: uuid('owner_id').references(() => users.id),
+  cityId: bigint('city_id', { mode: 'number' }).references(() => cities.id),
   approvalStatus: varchar('approval_status', { length: 20 })
     .notNull()
     .default('pending'),
@@ -66,33 +68,71 @@ export const deals = pgTable('deals', {
   createdAt: timestamp('created_at', { withTimezone: true }).defaultNow(),
 });
 
-export const savedSpas = pgTable('saved_spas', {
-  userId: uuid('user_id').notNull(),
-  spaId: uuid('spa_id').notNull(),
-  createdAt: timestamp('created_at', { withTimezone: true })
-    .notNull()
-    .defaultNow(),
-});
+export const savedSpas = pgTable(
+  'saved_spas',
+  {
+    userId: uuid('user_id')
+      .notNull()
+      .references(() => users.id, { onDelete: 'cascade' }),
+    spaId: uuid('spa_id')
+      .notNull()
+      .references(() => spas.id, { onDelete: 'cascade' }),
+    createdAt: timestamp('created_at', { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+  },
+  (table) => [primaryKey({ columns: [table.userId, table.spaId] })],
+);
 
-export const reviews = pgTable('reviews', {
-  id: uuid('id').primaryKey(),
-  userId: uuid('user_id').notNull(),
-  spaId: uuid('spa_id').notNull(),
-  rating: integer('rating').notNull(),
-  comment: text('comment').notNull(),
-  createdAt: timestamp('created_at', { withTimezone: true })
-    .notNull()
-    .defaultNow(),
-});
+export const reviews = pgTable(
+  'reviews',
+  {
+    id: uuid('id').primaryKey(),
+    userId: uuid('user_id')
+      .notNull()
+      .references(() => users.id),
+    spaId: uuid('spa_id')
+      .notNull()
+      .references(() => spas.id),
+    rating: integer('rating').notNull(),
+    comment: text('comment').notNull(),
+    createdAt: timestamp('created_at', { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+  },
+  (table) => [unique().on(table.userId, table.spaId)],
+);
 
 export const bookings = pgTable('bookings', {
   id: uuid('id').primaryKey(),
-  userId: uuid('user_id').notNull(),
-  spaId: uuid('spa_id').notNull(),
-  dealId: bigint('deal_id', { mode: 'number' }),
+  userId: uuid('user_id')
+    .notNull()
+    .references(() => users.id),
+  spaId: uuid('spa_id')
+    .notNull()
+    .references(() => spas.id),
+  dealId: bigint('deal_id', { mode: 'number' }).references(() => deals.id),
   status: varchar('status', { length: 20 }).notNull().default('pending'),
   scheduledAt: timestamp('scheduled_at', { withTimezone: true }).notNull(),
   createdAt: timestamp('created_at', { withTimezone: true })
     .notNull()
     .defaultNow(),
 });
+
+export const claimedVouchers = pgTable(
+  'claimed_vouchers',
+  {
+    userId: uuid('user_id')
+      .notNull()
+      .references(() => users.id, { onDelete: 'cascade' }),
+    dealId: bigint('deal_id', { mode: 'number' })
+      .notNull()
+      .references(() => deals.id, { onDelete: 'cascade' }),
+    status: varchar('status', { length: 20 }).notNull().default('available'),
+    claimedAt: timestamp('claimed_at', { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+    usedAt: timestamp('used_at', { withTimezone: true }),
+  },
+  (table) => [primaryKey({ columns: [table.userId, table.dealId] })],
+);

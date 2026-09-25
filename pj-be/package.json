@@ -13,7 +13,8 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
-    "test:smoke": "ts-node scripts/smoke.ts"
+    "test:smoke": "ts-node scripts/smoke.ts",
+    "test:audit": "ts-node scripts/audit.ts"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",

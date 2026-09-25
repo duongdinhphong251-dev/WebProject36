@@ -20,13 +20,11 @@
     "forceConsistentCasingInFileNames": true,
     "noImplicitAny": true,
     "strict": true,
-    "paths": {
-      "@db/*": ["src/db/*"],
-      "@common/*": ["src/common/*"],
-      "@modules/*": ["src/modules/*"]
-    },
     "strictBindCallApply": false,
     "noFallthroughCasesInSwitch": false
   },
-  "include": ["src/**/*.ts", "scripts/**/*.ts"]
+  "include": [
+    "src/**/*.ts",
+    "scripts/**/*.ts"
+  ]
 }

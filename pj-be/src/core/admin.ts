@@ -3,6 +3,7 @@ import {
   Body,
   Controller,
   Get,
+  NotFoundException,
   Param,
   Patch,
 } from '@nestjs/common';
@@ -18,6 +19,7 @@ import { count, eq } from 'drizzle-orm';
 import { Roles } from './auth';
 import { DbService } from './db';
 import { deals, spas, users } from './schema';
+import { PositiveIntPipe, UuidPipe } from './ids';
 
 export class ApprovalDto {
   @ApiProperty({ enum: ['approved', 'rejected'] })
@@ -93,13 +95,14 @@ export class AdminController {
   @Patch('users/:id/status')
   @ApiOperation({ summary: 'Ban or unban a user' })
   @ApiBody({ type: BanDto })
-  async ban(@Param('id') id: string, @Body() input: BanDto) {
+  async ban(@Param('id', UuidPipe) id: string, @Body() input: BanDto) {
     const target = await this.db.client
       .select({ role: users.role })
       .from(users)
       .where(eq(users.id, id))
       .limit(1);
-    if (!target[0] || target[0].role === 'admin')
+    if (!target[0]) throw new NotFoundException('Account not found');
+    if (target[0].role === 'admin')
       throw new BadRequestException(
         'Only user and owner accounts can be changed',
       );
@@ -113,22 +116,32 @@ export class AdminController {
   @Patch('spas/:id/approval')
   @ApiOperation({ summary: 'Approve or reject a spa' })
   @ApiBody({ type: ApprovalDto })
-  async spaApproval(@Param('id') id: string, @Body() input: ApprovalDto) {
-    await this.db.client
+  async spaApproval(
+    @Param('id', UuidPipe) id: string,
+    @Body() input: ApprovalDto,
+  ) {
+    const updated = await this.db.client
       .update(spas)
       .set({ approvalStatus: input.status })
-      .where(eq(spas.id, id));
+      .where(eq(spas.id, id))
+      .returning({ id: spas.id });
+    if (!updated.length) throw new NotFoundException('Spa not found');
     return { id, approvalStatus: input.status };
   }
 
   @Patch('deals/:id/approval')
   @ApiOperation({ summary: 'Approve or reject a voucher' })
   @ApiBody({ type: ApprovalDto })
-  async dealApproval(@Param('id') id: string, @Body() input: ApprovalDto) {
-    await this.db.client
+  async dealApproval(
+    @Param('id', PositiveIntPipe) id: number,
+    @Body() input: ApprovalDto,
+  ) {
+    const updated = await this.db.client
       .update(deals)
       .set({ approvalStatus: input.status })
-      .where(eq(deals.id, Number(id)));
-    return { id: Number(id), approvalStatus: input.status };
+      .where(eq(deals.id, id))
+      .returning({ id: deals.id });
+    if (!updated.length) throw new NotFoundException('Voucher not found');
+    return { id, approvalStatus: input.status };
   }
 }

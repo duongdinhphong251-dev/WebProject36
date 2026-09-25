@@ -17,17 +17,9 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-# Required by Env.ts validation at build time (@t3-oss/env-nextjs client)
-ARG NEXT_PUBLIC_APP_URL
-ARG NEXT_PUBLIC_APP_NAME
-ARG NEXT_PUBLIC_API
-ARG NEXT_PUBLIC_API_DOMAIN
-ARG NEXT_PUBLIC_GTM_ID
-ENV NEXT_PUBLIC_APP_URL=$NEXT_PUBLIC_APP_URL
-ENV NEXT_PUBLIC_APP_NAME=$NEXT_PUBLIC_APP_NAME
-ENV NEXT_PUBLIC_API=$NEXT_PUBLIC_API
-ENV NEXT_PUBLIC_API_DOMAIN=$NEXT_PUBLIC_API_DOMAIN
-ENV NEXT_PUBLIC_GTM_ID=$NEXT_PUBLIC_GTM_ID
+# The same API_URL must be reachable at build time (image rewrite) and runtime.
+ARG API_URL=http://host.docker.internal:8081/api/v1
+ENV API_URL=$API_URL
 
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1

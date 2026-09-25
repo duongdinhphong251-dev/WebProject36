@@ -49,6 +49,13 @@ CREATE TABLE IF NOT EXISTS bookings (
   status varchar(20) NOT NULL DEFAULT 'pending', scheduled_at timestamptz NOT NULL,
   created_at timestamptz NOT NULL DEFAULT now()
 );
+CREATE TABLE IF NOT EXISTS claimed_vouchers (
+  user_id uuid NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  deal_id bigint NOT NULL REFERENCES deals(id) ON DELETE CASCADE,
+  status varchar(20) NOT NULL DEFAULT 'available' CHECK (status IN ('available', 'used')),
+  claimed_at timestamptz NOT NULL DEFAULT now(), used_at timestamptz,
+  PRIMARY KEY (user_id, deal_id)
+);
 CREATE INDEX IF NOT EXISTS bookings_user_idx ON bookings(user_id, created_at DESC);
 CREATE INDEX IF NOT EXISTS bookings_spa_idx ON bookings(spa_id, scheduled_at DESC);
 CREATE INDEX IF NOT EXISTS spas_city_approval_idx ON spas(city_id, approval_status);
