@@ -49,8 +49,3 @@ npm run test:audit   # 40 kiểm tra quyền, input, trạng thái và request �
 ```
 
 Với frontend, chạy `npm test`, `npx tsc --noEmit`, `npm run lint`, `npm run build` trong `pj-fe/`. Xem [PROJECT_STRUCTURE.md](PROJECT_STRUCTURE.md) để hiểu cây thư mục và luồng request. Các file `.env` không được commit.
-
-## Học code và demo nhóm
-
-- [TEAM_GUIDE.md](TEAM_GUIDE.md): chia đều cho 6 người, file cần đọc, công nghệ, API, bảng dữ liệu, flow và câu hỏi bảo vệ.
-- [TEST_REPORT.md](TEST_REPORT.md): kết quả kiểm tra ngày 25/09/2026, kết quả sau sửa lỗi, giới hạn nghiệp vụ và cách chạy lại.
