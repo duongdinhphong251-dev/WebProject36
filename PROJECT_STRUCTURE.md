@@ -1,43 +1,41 @@
-# Cấu trúc dự án và luồng hoạt động
+# Project Structure and Request Flow
 
-Các thư mục sinh tự động như `node_modules/`, `.next/`, `dist/` không nằm trong cây mã nguồn.
+Generated directories such as `node_modules/`, `.next/`, and `dist/` are omitted from the source tree below.
 
 ```text
 Project/
-├── AGENTS.md                 # Hướng dẫn đóng góp
-├── README.md                 # Cài đặt, demo, kiểm tra
-├── PROJECT_STRUCTURE.md     # Tài liệu này
-├── TEAM_GUIDE.md            # Phân công 6 người và hướng dẫn học code
-├── TEST_REPORT.md           # Kết quả sau tối ưu và giới hạn kiểm tra
+├── README.md                 # Setup, demo accounts, and checks
+├── PROJECT_STRUCTURE.md      # Directory tree and request flow
+├── TEAM_GUIDE.md             # Features and demo walkthrough
 ├── .gitignore
 ├── pj-be/
 │   ├── .env.example
 │   ├── .gitignore
 │   ├── .prettierrc
-│   ├── package.json         # Lệnh và dependency backend
-│   ├── package-lock.json    # Phiên bản dependency đã khóa
+│   ├── package.json          # Backend scripts and dependencies
+│   ├── package-lock.json     # Locked dependency versions
 │   ├── nest-cli.json
 │   ├── eslint.config.mjs
 │   ├── tsconfig.json
 │   ├── tsconfig.build.json
 │   ├── drizzle/
 │   │   └── 20260924_restructure.sql
-│   ├── scripts/smoke.ts      # Kiểm tra luồng API, tự dọn dữ liệu thử
-│   ├── scripts/audit.ts      # Quyền, input sai, trạng thái, dùng voucher đồng thời
-│   ├── uploads/              # Ảnh bìa tải lên lúc chạy (không commit)
+│   ├── scripts/smoke.ts      # API workflow checks and test data cleanup
+│   ├── scripts/audit.ts      # Permissions, invalid input, state, and concurrency
+│   ├── uploads/              # Runtime image uploads (not committed)
 │   └── src/
-│       ├── main.ts           # Khởi động NestJS, ValidationPipe, Swagger
-│       ├── app.module.ts     # Đăng ký controller và guard
+│       ├── main.ts           # NestJS startup, ValidationPipe, and Swagger
+│       ├── app.module.ts     # Controller and guard registration
 │       └── core/
-│           ├── auth.ts       # Đăng ký, đăng nhập, JWT, phân quyền
-│           ├── catalog.ts    # Spa, voucher, thành phố công khai sau đăng nhập
-│           ├── member.ts     # Lưu spa, nhận/dùng voucher, đánh giá, đặt lịch
-│           ├── owner.ts      # Quản lý spa/voucher, tải ảnh và xem booking
-│           ├── ids.ts        # Kiểm tra ID spa tương thích dữ liệu cũ
-│           ├── admin.ts      # Duyệt nội dung, khóa tài khoản
-│           ├── db.ts         # Kết nối PostgreSQL qua Drizzle
-│           ├── schema.ts     # Bảng dữ liệu đang dùng
-│           ├── setup.ts      # Migration và seed
+│           ├── auth.ts       # Registration, sign-in, JWT, and roles
+│           ├── catalog.ts    # Spa, voucher, and city catalog for signed-in users
+│           ├── member.ts     # Saved spas, vouchers, reviews, and bookings
+│           ├── owner.ts      # Spa/voucher management, uploads, and bookings
+│           ├── ids.ts        # ID validation, including legacy spa UUIDs
+│           ├── admin.ts      # Content approval and account status
+│           ├── db.ts         # PostgreSQL connection through Drizzle
+│           ├── schema.ts     # Database table definitions
+│           ├── setup.ts      # Migration and seed data
 │           └── validation.spec.ts
 └── pj-fe/
     ├── .env.example
@@ -45,27 +43,27 @@ Project/
     ├── .dockerignore
     ├── package.json
     ├── package-lock.json
-    ├── next.config.ts       # Standalone và rewrite ảnh về backend
+    ├── next.config.ts        # Standalone output and backend image rewrites
     ├── tsconfig.json
     ├── tsconfig.test.json
-    ├── tests/helpers.test.ts # Hồi quy giờ địa phương và gửi form
+    ├── tests/helpers.test.ts # Local time and request helper checks
     ├── eslint.config.mjs
     ├── postcss.config.mjs
-    ├── Dockerfile           # Đóng gói frontend, dùng API_URL
-    ├── docker-compose.yml  # Chỉ frontend, không phải toàn hệ thống
+    ├── Dockerfile            # Frontend container using API_URL
+    ├── docker-compose.yml   # Frontend service only
     ├── public/
-    │   ├── favicon.png     # Ảnh favicon cũ
+    │   ├── favicon.png
     │   └── assets/
-    │       ├── images/common/logo_x.png  # Logo nhóm hiện dùng
+    │       ├── images/common/logo_x.png  # Team logo
     │       └── category/
     │           ├── massage-spa.png
     │           └── lam-dep.png
     └── src/
-        ├── proxy.ts         # Chặn URL khi chưa đăng nhập
+        ├── proxy.ts          # Redirects requests without a session cookie
         ├── lib/
-        │   ├── api.ts       # Đọc backend trong Server Component
-        │   ├── client-api.ts # Gửi form, upload, xử lý lỗi dùng chung
-        │   └── date-time.ts # Chuyển giờ địa phương và ISO UTC
+        │   ├── api.ts        # Backend requests from Server Components
+        │   ├── client-api.ts # Browser requests, uploads, and error handling
+        │   └── date-time.ts  # Local time and ISO UTC conversion
         ├── components/
         │   ├── AuthForm.tsx
         │   ├── Header.tsx
@@ -74,7 +72,7 @@ Project/
         │   ├── LogoutButton.tsx
         │   ├── MutationButton.tsx
         │   ├── OwnerForm.tsx
-        │   ├── OwnerFields.tsx # SpaFields và DealFields giữ UI hiện tại
+        │   ├── OwnerFields.tsx # Spa and voucher form fields
         │   └── SpaActions.tsx
         └── app/
             ├── layout.tsx
@@ -96,17 +94,22 @@ Project/
             └── api/backend/[...path]/route.ts
 ```
 
-## Flow
+## Request flow
 
 ```text
-Trình duyệt → proxy (kiểm tra cookie)
-             → Next.js Server Component → NestJS JWT guard → Drizzle → PostgreSQL
-             → React hiển thị
+Browser → proxy (cookie check)
+        → Next.js Server Component → NestJS JWT guard → Drizzle → PostgreSQL
+        → React rendering
 
-Form/nút Client Component → Next.js /api/* → NestJS phân quyền → Drizzle → PostgreSQL
-Chọn ảnh bìa → Next.js /api/backend → NestJS lưu pj-be/uploads → Next.js /uploads/* hiển thị ảnh
+Client Component form/button → Next.js /api/* → NestJS access control → Drizzle → PostgreSQL
+Cover image upload → Next.js /api/backend → NestJS saves to pj-be/uploads
+Image display → Next.js /uploads/* → backend image file
 ```
 
-`/login` và `/register` tạo cookie `httpOnly` chứa JWT bảy ngày. API NestJS kiểm tra token và trạng thái tài khoản trên mọi route khác. User chỉ thấy spa/voucher `approved`; chủ spa tạo nội dung `pending`; admin duyệt rồi nội dung mới hiện trên trang chủ. User nhận voucher vào `/me`, sau đó dùng một lần khi đặt lịch từ trang voucher. Bộ lọc thành phố dùng query `?city=ha-noi`; đổi ngôn ngữ chỉ đổi tiền tố `/vi` hoặc `/en`.
+Sign-in and registration set an HttpOnly session cookie containing a JWT valid for seven days. Protected NestJS endpoints validate the token and current account status. Users see approved catalog content; owners submit pending content, which becomes visible after admin approval.
 
-Các file cấu hình riêng `.env` (backend), `.env.local` (frontend) không đưa vào cây để tránh nhầm với template cần commit. `next-env.d.ts`, `tsconfig.tsbuildinfo`, `.next`, `.test-dist`, `dist` là file/thư mục sinh tự động. Dữ liệu PostgreSQL nằm ngoài cây source. Xem [TEAM_GUIDE.md](TEAM_GUIDE.md) cho sơ đồ bảng và giải thích từng luồng; xem [TEST_REPORT.md](TEST_REPORT.md) trước khi demo để biết các ca đã đạt và những giới hạn chưa kiểm tra.
+Users claim vouchers into `/me` and use each voucher once when booking from its detail page. City filtering uses `?city=ha-noi`. Language switching changes the `/vi` or `/en` prefix.
+
+Private configuration files such as backend `.env` and frontend `.env.local` are omitted from the tree to distinguish them from committed templates. `next-env.d.ts`, `tsconfig.tsbuildinfo`, `.next`, `.test-dist`, and `dist` are generated files or directories. PostgreSQL data is stored outside the source tree.
+
+See [TEAM_GUIDE.md](TEAM_GUIDE.md) for feature details, related files, and a demo walkthrough.

@@ -1,51 +1,56 @@
-# Nhom36 Spa & Voucher
+# Nhom36 · Spa & Voucher
 
-Dự án môn học gồm Next.js 16/React 19/Tailwind 4 và NestJS 11/Drizzle/PostgreSQL 16. Người dùng đăng nhập trước khi xem spa, voucher. Giao diện hỗ trợ tiếng Việt và tiếng Anh; giá chỉ hiển thị VND.
+A web application for discovering spas, booking appointments, and managing promotional vouchers. Developed by Group 36 as a web development course project.
 
-## Chạy trên máy
+The platform connects customers, spa owners, and administrators through three role-based workspaces. The catalog supports Vietnamese and English, with prices displayed in VND.
 
-Yêu cầu Node.js 20+ và PostgreSQL 16 (Docker có thể mở cổng 5433). Chạy trong PowerShell ở thư mục gốc:
+[Setup & Demo Guide](TEAM_GUIDE.md) · [Project Structure](PROJECT_STRUCTURE.md)
 
-```powershell
-docker run --name pj-postgres -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=tuoi_db -p 5433:5432 -d postgres:16
-cd pj-be
-Copy-Item .env.example .env
-npm ci
-npm run db:migrate
-npm run start:dev
+## Features
+
+| Role | Capabilities |
+| --- | --- |
+| Customer | Browse and search spas, filter by city, save favorites, write reviews, claim vouchers, and book appointments. |
+| Spa owner | Create and update spas and vouchers, upload cover images, and view customer bookings and statistics. |
+| Administrator | Review and approve listings, view platform statistics, and manage account access. |
+
+### Booking and voucher workflow
+
+1. A spa owner submits a spa or voucher for review.
+2. An administrator approves the listing before it appears in the catalog.
+3. A signed-in customer browses spas and books an appointment, optionally using a claimed voucher.
+4. The booking appears in both the customer and owner workspaces. A redeemed voucher is marked as used.
+
+Voucher redemption and booking creation run in a single database transaction to prevent a voucher from being used more than once.
+
+## Technology
+
+| Layer | Stack |
+| --- | --- |
+| Frontend | Next.js 16, React 19, TypeScript, CSS, Tailwind CSS 4 |
+| Backend | NestJS 11, TypeScript |
+| Database | PostgreSQL 16, Drizzle ORM |
+| Authentication | JWT, HttpOnly cookies, bcrypt |
+| Validation & API documentation | class-validator, class-transformer, Swagger |
+| Testing | Jest, Node.js test runner, API smoke and audit scripts |
+
+## Repository Layout
+
+```text
+pj-fe/                 Next.js frontend and API proxy routes
+pj-be/                 NestJS backend, database schema, and API checks
+README.md              Project overview
+TEAM_GUIDE.md          Setup, demo accounts, checks, and feature guide
+PROJECT_STRUCTURE.md  Detailed directory tree and request flow
 ```
 
-Trong terminal khác:
+The frontend forwards authenticated requests to the backend through Next.js server components and API routes. NestJS handles authorization, validation, and database operations. Uploaded cover images are stored on the backend host.
 
-```powershell
-cd pj-fe
-Copy-Item .env.example .env.local
-npm ci
-npm run dev
-```
+## Scope
 
-Mở `http://localhost:3000`. Nếu container `pj-postgres` đã tồn tại, dùng `docker start pj-postgres` thay cho `docker run`. Đổi `JWT_SECRET` trong `pj-be/.env` trước khi dùng ngoài máy cá nhân. Lệnh `db:migrate` cập nhật schema và tạo ba tài khoản demo nếu chưa có. Migration hiện cũng xóa bảng/cột cũ (banner, tracking, tiếng Hàn); đọc SQL trước khi chạy trên database có dữ liệu cần giữ. Với database trống, lệnh này tạo thêm ba thành phố, spa và voucher mẫu.
+The current version supports spa discovery, appointment booking, voucher management, and content moderation. Payments, invoicing, booking confirmation or cancellation, and appointment conflict detection are not implemented. Bookings remain in the `pending` state, and vouchers are redeemed when a booking is created.
 
-## Demo theo vai trò
+## Documentation
 
-| Vai trò | Số điện thoại | Mật khẩu | Trang |
-|---|---|---|---|
-| User | `0900000003` | `User@123456` | `/me` |
-| Chủ spa | `0900000002` | `Owner@123456` | `/owner` |
-| Admin | `0900000001` | `Admin@123456` | `/admin` |
-
-User xem danh sách `/vi` hoặc `/en`, lọc `?city=ha-noi`, lưu spa, viết đánh giá và đặt lịch. Trên trang voucher, bấm **Nhận voucher**; voucher xuất hiện trong `/me`. Đặt lịch từ trang voucher để sử dụng một lần; lịch của user và chủ spa đều hiển thị tên voucher. Voucher hết hạn hoặc đã dùng không thể đặt lại. Chủ spa tạo/sửa spa và voucher, chọn một ảnh bìa PNG/JPEG/WebP (tối đa 2 MB), xem lịch đặt và thống kê. Ảnh được lưu trong `pj-be/uploads/` trên máy chạy backend. Spa/voucher mới chỉ xuất hiện công khai sau khi admin duyệt. Admin xem toàn bộ dữ liệu và khóa/mở khóa tài khoản. Đăng ký người dùng ở `/register`, chủ spa ở `/register/owner`. Swagger: `http://localhost:8081/api/docs`.
-
-## Kiểm tra
-
-```powershell
-cd pj-be
-npx tsc --noEmit
-npm test -- --runInBand
-npm run build
-npm run lint
-npm run test:smoke   # cần backend và PostgreSQL đang chạy; tự dọn dữ liệu thử
-npm run test:audit   # 40 kiểm tra quyền, input, trạng thái và request đồng thời
-```
-
-Với frontend, chạy `npm test`, `npx tsc --noEmit`, `npm run lint`, `npm run build` trong `pj-fe/`. Xem [PROJECT_STRUCTURE.md](PROJECT_STRUCTURE.md) để hiểu cây thư mục và luồng request. Các file `.env` không được commit.
+- [Setup & Demo Guide](TEAM_GUIDE.md): prerequisites, local setup, demo accounts, verification commands, and a walkthrough of each feature.
+- [Project Structure](PROJECT_STRUCTURE.md): source files, request flow, and configuration layout.
